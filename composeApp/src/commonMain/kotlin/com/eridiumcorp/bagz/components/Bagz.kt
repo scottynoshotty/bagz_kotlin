@@ -9,6 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import bagz.composeapp.generated.resources.Res
+import bagz.composeapp.generated.resources.app_name
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun Bagz() =
@@ -18,6 +21,6 @@ fun Bagz() =
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Bagz")
+            Text(text = stringResource(Res.string.app_name))
         }
     }
