@@ -6,16 +6,11 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -24,11 +19,31 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            binaryOption("bundleId", "com.eridiumcorp.bagz")
         }
     }
-    
+
+    cocoapods {
+        version = "1.16.2"
+        summary = "CocoaPods library"
+        ios.deploymentTarget = "13"
+        homepage = "https://github.com/JetBrains/kotlin"
+
+        pod("FirebaseAuth") {
+            version = "11.6.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+    }
+
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
