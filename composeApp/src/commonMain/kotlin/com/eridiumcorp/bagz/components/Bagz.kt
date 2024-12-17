@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.app_name
+import com.eridiumcorp.bagz.app.services.AuthService
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -22,5 +23,6 @@ fun Bagz() =
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(Res.string.app_name))
+            Text(text = AuthService.userId() ?: "No current user")
         }
     }
