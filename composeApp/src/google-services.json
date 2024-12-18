@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "120657644187",
+    "project_id": "bagz-b77c4",
+    "storage_bucket": "bagz-b77c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120657644187:android:ad38c1f9a1df8abeac143e",
+        "android_client_info": {
+          "package_name": "com.eridiumcorp.bagz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120657644187-mpb5a1lvg9hvviemj9dnmsj7enbf04tq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eridiumcorp.bagz",
+            "certificate_hash": "614e46e0eaea0fc60e11338d1eda5196330b7f3e"
+          }
+        },
+        {
+          "client_id": "120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3PksXA7IaSGILMmna4JlkQqQI1_jt6cA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "120657644187-mdlfcsaf01ir6l42dlrbghn80evquh8q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eridiumcorp.bagz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

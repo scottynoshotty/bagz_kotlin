@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinCocoapods)
+    alias(libs.plugins.googleServices)
 }
 
 kotlin {
@@ -47,6 +48,8 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+            implementation("com.google.firebase:firebase-auth")
         }
         commonMain.dependencies {
             implementation(compose.runtime)

@@ -2,9 +2,7 @@ package com.eridiumcorp.bagz.components.bagz.signin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.OutlinedButton
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,16 +18,12 @@ import org.jetbrains.compose.resources.stringResource
 fun SignInScreen(modifier: Modifier = Modifier) =
     Scaffold(modifier = modifier) {
         Column(
-            modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+            modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(Res.string.app_name))
             Text(text = AuthService.userId() ?: "No current user")
-            OutlinedButton(
-                onClick = { AuthService.signInWithGoogle() },
-            ) {
-                Text(text = "Sign in with Google")
-            }
+            GoogleSignInButton(onClick = { AuthService.signInWithGoogle() })
         }
     }
