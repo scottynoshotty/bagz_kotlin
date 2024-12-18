@@ -4,5 +4,6 @@ package com.eridiumcorp.bagz.app.services
 expect class AuthService {
     companion object {
         fun userId(): String?
+        fun signInWithGoogle()
     }
 }

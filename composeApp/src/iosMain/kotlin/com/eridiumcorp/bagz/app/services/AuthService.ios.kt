@@ -10,5 +10,7 @@ actual class AuthService {
         private val auth = FIRAuth.auth()
 
         actual fun userId(): String? = auth.currentUser()?.uid()
+
+        actual fun signInWithGoogle() {}
     }
 }

@@ -30,9 +30,9 @@ kotlin {
         homepage = "https://github.com/JetBrains/kotlin"
 
         pod("FirebaseAuth") {
-            version = "11.6.0"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
+        pod("GoogleSignIn")
     }
 
     androidTarget {

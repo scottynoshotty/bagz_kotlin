@@ -4,5 +4,6 @@ package com.eridiumcorp.bagz.app.services
 actual class AuthService {
     actual companion object {
         actual fun userId(): String? = null
+        actual fun signInWithGoogle() {}
     }
 }
