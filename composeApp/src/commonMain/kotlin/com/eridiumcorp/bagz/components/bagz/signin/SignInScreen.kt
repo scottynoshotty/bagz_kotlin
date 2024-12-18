@@ -23,7 +23,7 @@ fun SignInScreen(modifier: Modifier = Modifier) =
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(Res.string.app_name))
-            Text(text = AuthService.userId() ?: "No current user")
+            Text(text = AuthService.currentUserId() ?: "No current user")
             GoogleSignInButton(onClick = { AuthService.signInWithGoogle() })
         }
     }
