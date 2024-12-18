@@ -49,7 +49,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
-            implementation("com.google.firebase:firebase-auth")
+            implementation(libs.firebase.auth)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
