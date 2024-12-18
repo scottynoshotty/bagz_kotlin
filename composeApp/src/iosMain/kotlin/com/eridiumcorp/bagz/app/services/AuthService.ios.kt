@@ -12,5 +12,7 @@ actual class AuthService {
         actual fun userId(): String? = auth.currentUser()?.uid()
 
         actual fun signInWithGoogle() {}
+
+        actual fun signOut() {}
     }
 }

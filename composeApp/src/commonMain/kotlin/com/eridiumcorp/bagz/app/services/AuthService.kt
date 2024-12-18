@@ -5,5 +5,6 @@ expect class AuthService {
     companion object {
         fun userId(): String?
         fun signInWithGoogle()
+        fun signOut()
     }
 }

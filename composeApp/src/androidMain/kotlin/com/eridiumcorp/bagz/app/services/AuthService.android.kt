@@ -11,7 +11,10 @@ actual class AuthService {
 
         actual fun userId(): String? = auth.uid
         actual fun signInWithGoogle() {
+        }
 
+        actual fun signOut() {
+            auth.signOut()
         }
     }
 }
