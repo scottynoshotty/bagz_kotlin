@@ -51,6 +51,8 @@ kotlin {
             implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.7.0"))
             implementation(libs.firebase.auth)
             implementation(libs.androidx.credentials)
+            implementation(libs.googleid)
+            implementation(libs.play.services.auth)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
