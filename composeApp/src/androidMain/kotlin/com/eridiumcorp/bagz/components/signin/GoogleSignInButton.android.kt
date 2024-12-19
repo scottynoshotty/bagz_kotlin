@@ -1,4 +1,4 @@
-package com.eridiumcorp.bagz.components.bagz.signin
+package com.eridiumcorp.bagz.components.signin
 
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
