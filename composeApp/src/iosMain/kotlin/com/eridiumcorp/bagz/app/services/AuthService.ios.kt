@@ -16,7 +16,7 @@ actual class AuthService {
 
         actual fun currentUserId(): String? = auth.currentUser()?.uid()
 
-        actual fun signInWithGoogle() {}
+        actual suspend fun signInWithGoogle(token: String) {}
 
         actual suspend fun signOut() {}
 

@@ -8,7 +8,7 @@ expect class AuthService {
     companion object {
         fun currentUser(): Flow<User?>
         fun currentUserId(): String?
-        fun signInWithGoogle()
+        suspend fun signInWithGoogle(token: String)
         suspend fun signOut()
         suspend fun deleteAccount()
     }

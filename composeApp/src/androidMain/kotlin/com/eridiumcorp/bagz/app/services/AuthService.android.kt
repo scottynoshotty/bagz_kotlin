@@ -3,6 +3,7 @@ package com.eridiumcorp.bagz.app.services
 import com.eridiumcorp.bagz.app.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -38,7 +39,9 @@ actual class AuthService {
 
         actual fun currentUserId(): String? = auth.uid
 
-        actual fun signInWithGoogle() {
+        actual suspend fun signInWithGoogle(token: String) {
+            val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
+            auth.signInWithCredential(firebaseCredential)
         }
 
         actual suspend fun signOut() {
