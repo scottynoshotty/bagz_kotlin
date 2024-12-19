@@ -27,6 +27,10 @@ actual fun SignInScreen(modifier: Modifier) =
         ) {
             Text(text = stringResource(Res.string.app_name))
             Text(text = AuthService.currentUserId() ?: "No current user")
-            GoogleSignInButton { }
+            GoogleSignInButton { credential ->
+                {
+
+                }
+            }
         }
     }
