@@ -2,16 +2,39 @@ package com.eridiumcorp.bagz.app.services
 
 import com.eridiumcorp.bagz.app.models.User
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.callbackFlow
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class AuthService {
     actual companion object {
         private val auth = Firebase.auth
 
-        actual fun currentUser(): Flow<User?> = flowOf(null)
+        actual fun currentUser(): Flow<User?> = callbackFlow {
+            val listener =
+                FirebaseAuth.AuthStateListener { auth ->
+                    if (auth.currentUser == null) {
+                        this.trySend(null)
+                    } else {
+                        val fireUser = auth.currentUser!!
+                        this.trySend(
+                            User(
+                                fireUser.uid,
+                                fireUser.email ?: "",
+                                fireUser.providerId,
+                                fireUser.displayName ?: "",
+                                fireUser.isAnonymous
+                            )
+                        )
+                    }
+
+                }
+            auth.addAuthStateListener(listener)
+            awaitClose { auth.removeAuthStateListener(listener) }
+        }
 
         actual fun currentUserId(): String? = auth.uid
 
