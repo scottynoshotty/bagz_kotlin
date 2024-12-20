@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.googleid)
             implementation(libs.play.services.auth)
             implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

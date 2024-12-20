@@ -6,16 +6,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-open class AppViewModel : ViewModel() {
+open class AppViewModel: ViewModel() {
     fun launchCatching(block: suspend CoroutineScope.() -> Unit) =
         viewModelScope.launch(
-            CoroutineExceptionHandler { _, throwable ->
-                println("$ERROR_TAG, ${throwable.message.orEmpty()}")
-            },
+            CoroutineExceptionHandler { _, throwable -> {}},
             block = block
         )
-
-    companion object {
-        const val ERROR_TAG = "Bagz APP ERROR"
-    }
 }

@@ -14,9 +14,12 @@ import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.app_name
 import com.eridiumcorp.bagz.app.services.AuthService
 import org.jetbrains.compose.resources.stringResource
+import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
-actual fun SignInScreen(modifier: Modifier) =
+actual fun SignInScreen(modifier: Modifier) {
+    val viewModel = koinViewModel<SignInViewModel>()
     Scaffold(modifier = modifier) { padding ->
         Column(
             modifier = modifier
@@ -29,8 +32,9 @@ actual fun SignInScreen(modifier: Modifier) =
             Text(text = AuthService.currentUserId() ?: "No current user")
             GoogleSignInButton { credential ->
                 {
-
+                    viewModel.onSignInWithGoogle(credential = credential)
                 }
             }
         }
     }
+}
