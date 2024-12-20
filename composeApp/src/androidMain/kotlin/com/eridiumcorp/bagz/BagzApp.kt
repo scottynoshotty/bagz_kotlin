@@ -10,13 +10,10 @@ import org.koin.core.context.startKoin
 class BagzApp : Application(), KoinComponent {
 
     override fun onCreate() {
-        println("------------------------ 123456789 ------------------------")
-        println("123456789 Bagz")
-        println("------------------------ 123456789 ------------------------")
         super.onCreate()
         startKoin {
-            modules(appModule)
             androidContext(this@BagzApp)
+            modules(appModule)
         }
         Firebase.initialize(this)
     }
