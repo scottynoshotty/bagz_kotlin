@@ -11,44 +11,43 @@ import kotlinx.coroutines.flow.callbackFlow
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class AuthService {
-    actual companion object {
-        private val auth = Firebase.auth
+    private val auth = Firebase.auth
 
-        actual fun currentUser(): Flow<User?> = callbackFlow {
-            val listener =
-                FirebaseAuth.AuthStateListener { auth ->
-                    if (auth.currentUser == null) {
-                        this.trySend(null)
-                    } else {
-                        val fireUser = auth.currentUser!!
-                        this.trySend(
-                            User(
-                                fireUser.uid,
-                                fireUser.email ?: "",
-                                fireUser.providerId,
-                                fireUser.displayName ?: "",
-                                fireUser.isAnonymous
-                            )
+    actual fun currentUser(): Flow<User?> = callbackFlow {
+        val listener =
+            FirebaseAuth.AuthStateListener { auth ->
+                if (auth.currentUser == null) {
+                    this.trySend(null)
+                } else {
+                    val fireUser = auth.currentUser!!
+                    this.trySend(
+                        User(
+                            fireUser.uid,
+                            fireUser.email ?: "",
+                            fireUser.providerId,
+                            fireUser.displayName ?: "",
+                            fireUser.isAnonymous
                         )
-                    }
-
+                    )
                 }
-            auth.addAuthStateListener(listener)
-            awaitClose { auth.removeAuthStateListener(listener) }
-        }
 
-        actual fun currentUserId(): String? = auth.uid
-
-        actual suspend fun signInWithGoogle(token: String) {
-            val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
-            auth.signInWithCredential(firebaseCredential)
-        }
-
-        actual suspend fun signOut() {
-            auth.signOut()
-        }
-
-        actual suspend fun deleteAccount() {}
-
+            }
+        auth.addAuthStateListener(listener)
+        awaitClose { auth.removeAuthStateListener(listener) }
     }
+
+    actual fun currentUserId(): String? = auth.uid
+
+    actual suspend fun signInWithGoogle(token: String) {
+        val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
+        auth.signInWithCredential(firebaseCredential)
+    }
+
+    actual suspend fun signOut() {
+        auth.signOut()
+    }
+
+    actual suspend fun deleteAccount() {}
+
+
 }

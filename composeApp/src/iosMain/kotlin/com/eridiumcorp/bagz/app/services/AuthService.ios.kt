@@ -9,18 +9,17 @@ import kotlinx.coroutines.flow.flowOf
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 @OptIn(ExperimentalForeignApi::class)
 actual class AuthService {
-    actual companion object {
-        private val auth = FIRAuth.auth()
+    private val auth = FIRAuth.auth()
 
-        actual fun currentUser(): Flow<User?> = flowOf(null)
+    actual fun currentUser(): Flow<User?> = flowOf(null)
 
-        actual fun currentUserId(): String? = auth.currentUser()?.uid()
+    actual fun currentUserId(): String? = auth.currentUser()?.uid()
 
-        actual suspend fun signInWithGoogle(token: String) {}
+    actual suspend fun signInWithGoogle(token: String) {}
 
-        actual suspend fun signOut() {}
+    actual suspend fun signOut() {}
 
-        actual suspend fun deleteAccount() {}
+    actual suspend fun deleteAccount() {}
 
-    }
+
 }
