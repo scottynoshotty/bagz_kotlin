@@ -9,19 +9,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.app_name
-import com.eridiumcorp.bagz.app.services.AuthService
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.koinInject
 
 
 @Composable
 actual fun SignInScreen(modifier: Modifier) {
-    val viewModel = koinViewModel<SignInViewModel>()
-    val authService = koinInject<AuthService>()
+    val signInViewModel: SignInViewModel = koinViewModel<SignInViewModel>()
+    val uiState = signInViewModel.uiState.collectAsState()
     Scaffold(modifier = modifier) { padding ->
         Column(
             modifier = modifier
@@ -31,11 +30,14 @@ actual fun SignInScreen(modifier: Modifier) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(Res.string.app_name))
-            Text(text = authService.currentUserId() ?: "No current user")
-            GoogleSignInButton { credential ->
-                {
-                    viewModel.onSignInWithGoogle(credential = credential)
+            if (uiState.value.user == null) {
+                Text(text = "No current user")
+                GoogleSignInButton {
+                    signInViewModel.signInWithGoogle()
                 }
+            } else {
+                Text(text = "Greetings ${uiState.value.user!!.displayName}")
+                SignOutButton { signInViewModel.signOut() }
             }
         }
     }
