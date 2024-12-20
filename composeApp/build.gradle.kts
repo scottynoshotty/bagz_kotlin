@@ -57,6 +57,7 @@ kotlin {
             implementation(libs.play.services.auth)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+            implementation(libs.firebase.functions)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
