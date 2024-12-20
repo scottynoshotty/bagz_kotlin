@@ -1,6 +1,7 @@
 package com.eridiumcorp.bagz
 
 import com.eridiumcorp.bagz.app.services.AuthService
+import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.home.HomeViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel
@@ -13,4 +14,5 @@ val appModule = module {
     viewModel { LandingViewModel() }
     viewModel { HomeViewModel() }
     single { AuthService() }
+    single { PlaidService() }
 }

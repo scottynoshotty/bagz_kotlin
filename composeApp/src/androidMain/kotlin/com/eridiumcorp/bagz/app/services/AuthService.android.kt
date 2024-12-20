@@ -42,14 +42,6 @@ actual class AuthService {
     actual suspend fun signInWithGoogle(token: String) {
         val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
         val authResult = auth.signInWithCredential(firebaseCredential).await()
-        println("------------------------ 123456789 ------------------------")
-        val user = authResult.user
-        if (user == null) {
-            println("123456789 No user in auth result")
-        } else {
-            println("123456789 Got user in auth result")
-        }
-        println("------------------------ 123456789 ------------------------")
     }
 
     actual suspend fun signOut() {

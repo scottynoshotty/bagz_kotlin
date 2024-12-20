@@ -31,9 +31,11 @@ actual fun HomeScreen(modifier: Modifier) {
         floatingActionButton = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(start = 28.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 28.dp)
             ) {
-                FloatingActionButton(onClick = { /* Handle add action */ }) {
+                FloatingActionButton(onClick = { viewModel.launchLink() }) {
                     Icon(Icons.Default.AddCircle, "Link Account")
                 }
 
