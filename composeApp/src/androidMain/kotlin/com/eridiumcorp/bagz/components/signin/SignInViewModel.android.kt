@@ -2,8 +2,6 @@ package com.eridiumcorp.bagz.components.signin
 
 import android.content.Context
 import androidx.credentials.GetCredentialRequest
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import androidx.credentials.CredentialManager
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -31,7 +29,6 @@ class SignInViewModel(val applicationContext: Context) : AppViewModel() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     fun signInWithGoogle() {
         val googleIdOption = GetGoogleIdOption.Builder()
             .setServerClientId("120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com")
