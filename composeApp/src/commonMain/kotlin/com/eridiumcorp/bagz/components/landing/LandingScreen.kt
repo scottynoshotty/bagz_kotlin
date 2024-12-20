@@ -1,0 +1,7 @@
+package com.eridiumcorp.bagz.components.landing
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+@Composable
+expect fun LandingScreen(modifier: Modifier = Modifier)
