@@ -8,11 +8,12 @@ androidx-lifecycle = "2.8.3"
 compose-multiplatform = "1.7.0"
 credentials = "1.5.0-beta01"
 googleid = "1.1.1"
+insertKoinKoinCompose = "4.0.0"
 kotlin = "2.1.0"
 kotlinxDatetime = "0.6.0"
 google-services = "4.4.2"
 playServicesAuth = "21.3.0"
-koin = "3.4.1"
+koin = "4.0.0"
 koinAnnotations = "1.2.2"
 ksp = "2.1.0-1.0.29"
 
@@ -23,6 +24,7 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+io-insert-koin-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "insertKoinKoinCompose" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }

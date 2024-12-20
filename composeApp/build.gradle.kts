@@ -69,6 +69,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(libs.io.insert.koin.koin.compose)
             api(libs.koin.annotations)
         }
     }
