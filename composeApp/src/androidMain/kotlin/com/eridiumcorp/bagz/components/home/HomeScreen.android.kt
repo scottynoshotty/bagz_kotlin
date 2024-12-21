@@ -20,12 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.app_name
+import com.eridiumcorp.bagz.components.LocalNavController
+import com.eridiumcorp.bagz.components.link.LinkHost
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 actual fun HomeScreen(modifier: Modifier) {
     val viewModel = koinViewModel<HomeViewModel>()
+    val navController = LocalNavController.current
     val uiState = viewModel.uiState.collectAsState()
     Scaffold(
         floatingActionButton = {
@@ -35,7 +38,7 @@ actual fun HomeScreen(modifier: Modifier) {
                     .fillMaxWidth()
                     .padding(start = 28.dp)
             ) {
-                FloatingActionButton(onClick = { viewModel.launchLink() }) {
+                FloatingActionButton(onClick = { navController.navigate(LinkHost) }) {
                     Icon(Icons.Default.AddCircle, "Link Account")
                 }
 
