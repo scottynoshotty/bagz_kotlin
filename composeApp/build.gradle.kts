@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.safeArgs)
 }
 
 kotlin {
