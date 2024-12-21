@@ -4,6 +4,7 @@ import com.eridiumcorp.bagz.app.services.AuthService
 import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.home.HomeViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
+import com.eridiumcorp.bagz.components.link.LinkHostViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -13,6 +14,7 @@ val appModule = module {
     viewModel { SignInViewModel(androidContext()) }
     viewModel { LandingViewModel() }
     viewModel { HomeViewModel() }
+    viewModel { LinkHostViewModel() }
     single { AuthService() }
     single { PlaidService() }
 }
