@@ -17,6 +17,7 @@ playServicesAuth = "21.3.0"
 koin = "4.0.0"
 koinAnnotations = "1.2.2"
 ksp = "2.1.0-1.0.29"
+sdkCore = "5.0.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -34,6 +35,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
 ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinAnnotations" }
+sdk-core = { module = "com.plaid.link:sdk-core", version.ref = "sdkCore" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -58,6 +58,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.firebase.functions)
+            implementation(libs.sdk.core)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
