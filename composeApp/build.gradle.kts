@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinCocoapods)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.ksp)
 }
@@ -59,6 +60,8 @@ kotlin {
             implementation(libs.koin.androidx.compose)
             implementation(libs.firebase.functions)
             implementation(libs.sdk.core)
+            implementation(libs.compose.navigation)
+            implementation(libs.json.serialization)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
