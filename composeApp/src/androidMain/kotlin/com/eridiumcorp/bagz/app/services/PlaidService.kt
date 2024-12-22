@@ -20,4 +20,12 @@ class PlaidService {
         }
         return null
     }
+
+    suspend fun linkInstitution(publicToken: String) {
+        functions.getHttpsCallable("link_accounts").call(
+            mapOf(
+                "public_token" to publicToken
+            )
+        ).await()
+    }
 }

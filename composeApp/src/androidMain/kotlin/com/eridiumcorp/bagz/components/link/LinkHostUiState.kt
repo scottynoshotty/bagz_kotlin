@@ -1,3 +1,8 @@
 package com.eridiumcorp.bagz.components.link
 
-data class LinkHostUiState(val message: String = "Link an account :)")
+import com.plaid.link.configuration.LinkTokenConfiguration
+
+data class LinkHostUiState(
+    val loading: Boolean = true,
+    val linkTokenConfiguration: LinkTokenConfiguration? = null,
+)
