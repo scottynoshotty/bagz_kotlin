@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.sdk.core)
             implementation(libs.compose.navigation)
             implementation(libs.json.serialization)
+            implementation(libs.firebase.firestore)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
