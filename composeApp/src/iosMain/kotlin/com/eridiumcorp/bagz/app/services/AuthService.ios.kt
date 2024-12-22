@@ -13,7 +13,7 @@ actual class AuthService {
 
     actual fun currentUser(): Flow<User?> = flowOf(null)
 
-    actual fun currentUserId(): String? = auth.currentUser()?.uid()
+    actual fun currentUserId(): String = auth.currentUser()!!.uid
 
     actual suspend fun signInWithGoogle(token: String) {}
 

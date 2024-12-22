@@ -1,5 +1,6 @@
 package com.eridiumcorp.bagz
 
+import com.eridiumcorp.bagz.app.repositories.AccountsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
 import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.home.HomeViewModel
@@ -17,4 +18,5 @@ val appModule = module {
     viewModel { LinkHostViewModel() }
     single { AuthService() }
     single { PlaidService() }
+    single { AccountsRepository() }
 }

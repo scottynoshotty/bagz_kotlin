@@ -57,6 +57,9 @@ actual fun HomeScreen(modifier: Modifier) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(Res.string.app_name))
+            if (uiState.value.accounts.isNotEmpty()) {
+                Text(text = "You have linked ${uiState.value.accounts.size} accounts")
+            }
         }
     }
 }

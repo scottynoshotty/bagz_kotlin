@@ -37,7 +37,7 @@ actual class AuthService {
         awaitClose { auth.removeAuthStateListener(listener) }
     }
 
-    actual fun currentUserId(): String? = auth.uid
+    actual fun currentUserId(): String = auth.uid!!
 
     actual suspend fun signInWithGoogle(token: String) {
         val firebaseCredential = GoogleAuthProvider.getCredential(token, null)

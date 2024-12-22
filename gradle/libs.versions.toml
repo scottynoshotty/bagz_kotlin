@@ -13,6 +13,7 @@ insertKoinKoinCompose = "4.0.0"
 kotlin = "2.1.0"
 kotlinxDatetime = "0.6.0"
 google-services = "4.4.2"
+pagingRuntime = "3.3.5"
 playServicesAuth = "21.3.0"
 koin = "4.0.0"
 koinAnnotations = "1.2.2"
@@ -27,6 +28,8 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }

@@ -52,7 +52,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.7.0"))
             implementation(libs.firebase.auth)
             implementation(libs.androidx.credentials)
             implementation(libs.googleid)
@@ -65,6 +64,8 @@ kotlin {
             implementation(libs.json.serialization)
             implementation(libs.firebase.firestore)
             implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.androidx.paging.runtime)
+            implementation(libs.androidx.paging.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
