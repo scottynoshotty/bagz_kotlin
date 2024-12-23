@@ -1,7 +1,7 @@
 package com.eridiumcorp.bagz.components.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,11 +18,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import bagz.composeapp.generated.resources.Res
-import bagz.composeapp.generated.resources.app_name
 import com.eridiumcorp.bagz.components.LocalNavController
+import com.eridiumcorp.bagz.components.accounts.list.AccountList
 import com.eridiumcorp.bagz.components.link.LinkHost
-import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -49,17 +47,18 @@ actual fun HomeScreen(modifier: Modifier) {
         },
         modifier = modifier,
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = stringResource(Res.string.app_name))
-            if (uiState.value.accounts.isNotEmpty()) {
-                Text(text = "You have linked ${uiState.value.accounts.size} accounts")
+        if (uiState.value.accounts.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("There are no accounts.")
             }
+        } else {
+            AccountList(accounts = uiState.value.accounts, onAccountClick = {})
         }
+
     }
 }
