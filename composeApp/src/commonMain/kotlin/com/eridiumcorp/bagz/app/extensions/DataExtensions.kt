@@ -39,3 +39,18 @@ fun Map<String, Any?>.extractMap(key: String): Map<String, Any?>? {
     }
     return null
 }
+
+fun Map<String, Any?>.extractMapList(key: String): List<Map<String, Any?>>? {
+    val value = this[key]
+    if (value is List<*>) {
+        return value.mapNotNull { item ->
+            if (item is Map<*, *> && item.keys.all { it is String }) {
+                @Suppress("UNCHECKED_CAST")
+                item as Map<String, Any?>
+            } else {
+                null
+            }
+        }
+    }
+    return null
+}
