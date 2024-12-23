@@ -59,7 +59,7 @@ actual fun HomeScreen(modifier: Modifier) {
             }
         } else {
             AccountList(accounts = uiState.value.accounts, onAccountClick = {
-                navController.navigate(AccountDetails)
+                navController.navigate(AccountDetails(it.accountId))
             })
         }
 

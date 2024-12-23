@@ -3,4 +3,4 @@ package com.eridiumcorp.bagz.components.accounts.details
 import kotlinx.serialization.Serializable
 
 @Serializable
-object AccountDetails
+data class AccountDetails(val accountId: String)
