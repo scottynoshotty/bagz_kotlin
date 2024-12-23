@@ -12,26 +12,27 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.eridiumcorp.bagz.components.accounts.list.AccountListItem
+import com.eridiumcorp.bagz.components.transactions.list.TransactionsList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AccountDetailsScreen(modifier: Modifier) {
     val viewModel = koinViewModel<AccountDetailsViewModel>()
     val uiState = viewModel.uiState.collectAsState()
-    Scaffold(
-        modifier = modifier,
-    ) { padding ->
+
+    Scaffold(modifier = modifier) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(padding)
         ) {
-            when {
-                uiState.value.loading -> CircularProgressIndicator()
-                uiState.value.account == null -> Text("Account not found")
-                else -> AccountListItem(account = uiState.value.account!!) { }
+            if (uiState.value.loading) {
+                CircularProgressIndicator()
+            } else if (uiState.value.account == null) {
+                Text("Account not found")
+            } else {
+                AccountListItem(account = uiState.value.account!!) {}
+                TransactionsList(pager = viewModel.transactions)
             }
         }
     }

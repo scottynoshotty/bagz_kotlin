@@ -1,8 +1,13 @@
 package com.eridiumcorp.bagz.components.accounts.details
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.eridiumcorp.bagz.app.repositories.AccountsRepository
+import com.eridiumcorp.bagz.app.repositories.TransactionsPagingSource
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.components.app.AppViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +24,9 @@ class AccountDetailsViewModel(
     private val accountDetails = savedStateHandle.toRoute<AccountDetails>()
     private val _uiState = MutableStateFlow(AccountDetailsUiState())
     val uiState: StateFlow<AccountDetailsUiState> = _uiState.asStateFlow()
+    val transactions = Pager(PagingConfig(pageSize = 30)) {
+        TransactionsPagingSource(transactionsRepository, accountDetails.accountId)
+    }
 
     init {
         launchCatching {
