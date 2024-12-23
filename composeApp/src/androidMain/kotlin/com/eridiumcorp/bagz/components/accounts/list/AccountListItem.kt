@@ -30,7 +30,7 @@ fun AccountListItem(account: Account, onAccountClick: (Account) -> Unit) {
         ) {
             Text(
                 text = account.name,
-                style = MaterialTheme.typography.h1
+                style = MaterialTheme.typography.h5
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
