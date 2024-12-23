@@ -1,5 +1,6 @@
 package com.eridiumcorp.bagz
 
+import androidx.lifecycle.SavedStateHandle
 import com.eridiumcorp.bagz.app.repositories.AccountsRepository
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
@@ -29,5 +30,7 @@ val appModule = module {
     viewModel { LandingViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
     viewModel { LinkHostViewModel(get()) }
-    viewModel { AccountDetailsViewModel(get()) }
+    viewModel { (savedStateHandle: SavedStateHandle) ->
+        AccountDetailsViewModel(get(), get(), savedStateHandle)
+    }
 }

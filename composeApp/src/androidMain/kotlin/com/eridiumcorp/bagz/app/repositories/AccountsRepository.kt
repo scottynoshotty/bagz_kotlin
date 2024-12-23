@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 
 class AccountsRepository(
     private val firestore: FirebaseFirestore,
@@ -22,6 +23,16 @@ class AccountsRepository(
             .map { snapshot ->
                 snapshot.documents.map { doc -> doc.toAccount() }
             }
+    }
+
+    suspend fun getAccountById(accountId: String): Account? {
+        val document = firestore.collection("accounts")
+            .document(auth.uid!!)
+            .collection("user_accounts")
+            .document(accountId)
+            .get().await()
+
+        return if (document.exists()) document.toAccount() else null
     }
 }
 

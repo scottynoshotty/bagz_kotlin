@@ -1,21 +1,29 @@
 package com.eridiumcorp.bagz.components.accounts.details
 
+import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
+import com.eridiumcorp.bagz.app.repositories.AccountsRepository
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.components.app.AppViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class AccountDetailsViewModel(private val transactionsRepository: TransactionsRepository) :
+class AccountDetailsViewModel(
+    private val accountsRepository: AccountsRepository,
+    private val transactionsRepository: TransactionsRepository,
+    savedStateHandle: SavedStateHandle,
+) :
     AppViewModel() {
 
-    private val _uiState = MutableStateFlow(AccountDetailsUiState(loading = true))
+    private val accountDetails = savedStateHandle.toRoute<AccountDetails>()
+    private val _uiState = MutableStateFlow(AccountDetailsUiState())
     val uiState: StateFlow<AccountDetailsUiState> = _uiState.asStateFlow()
 
     init {
         launchCatching {
-            transactionsRepository.getTransactions()
-            _uiState.value = uiState.value.copy(loading = false)
+            val account = accountsRepository.getAccountById(accountDetails.accountId)
+            _uiState.value = _uiState.value.copy(loading = false, account = account)
         }
     }
 }

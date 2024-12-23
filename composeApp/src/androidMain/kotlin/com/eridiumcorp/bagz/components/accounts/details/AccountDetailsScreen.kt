@@ -11,10 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.eridiumcorp.bagz.components.accounts.list.AccountListItem
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AccountDetailsScreen(accountDetails: AccountDetails, modifier: Modifier) {
+fun AccountDetailsScreen(modifier: Modifier) {
     val viewModel = koinViewModel<AccountDetailsViewModel>()
     val uiState = viewModel.uiState.collectAsState()
     Scaffold(
@@ -27,11 +28,10 @@ fun AccountDetailsScreen(accountDetails: AccountDetails, modifier: Modifier) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (uiState.value.loading) {
-                CircularProgressIndicator()
-            } else {
-                Text("Welcome to the account details page")
-                Text("Account id: ${accountDetails.accountId}")
+            when {
+                uiState.value.loading -> CircularProgressIndicator()
+                uiState.value.account == null -> Text("Account not found")
+                else -> AccountListItem(account = uiState.value.account!!) { }
             }
         }
     }

@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetails
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsScreen
 import com.eridiumcorp.bagz.components.landing.Landing
@@ -23,10 +22,7 @@ actual fun Bagz(modifier: Modifier) {
         NavHost(navController = navController, startDestination = Landing) {
             composable<Landing> { LandingScreen(modifier) }
             composable<LinkHost> { LinkHostScreen(modifier) }
-            composable<AccountDetails> { backStackEntry ->
-                val accountDetails: AccountDetails = backStackEntry.toRoute()
-                AccountDetailsScreen(accountDetails, modifier)
-            }
+            composable<AccountDetails> { AccountDetailsScreen(modifier) }
         }
     }
 }
