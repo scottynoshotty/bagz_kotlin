@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.components.LocalNavController
+import com.eridiumcorp.bagz.components.accounts.details.AccountDetails
 import com.eridiumcorp.bagz.components.accounts.list.AccountList
 import com.eridiumcorp.bagz.components.link.LinkHost
 import org.koin.androidx.compose.koinViewModel
@@ -57,7 +58,9 @@ actual fun HomeScreen(modifier: Modifier) {
                 Text("There are no accounts.")
             }
         } else {
-            AccountList(accounts = uiState.value.accounts, onAccountClick = {})
+            AccountList(accounts = uiState.value.accounts, onAccountClick = {
+                navController.navigate(AccountDetails)
+            })
         }
 
     }

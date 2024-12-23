@@ -29,5 +29,5 @@ val appModule = module {
     viewModel { LandingViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
     viewModel { LinkHostViewModel(get()) }
-    viewModel { AccountDetailsViewModel() }
+    viewModel { AccountDetailsViewModel(get()) }
 }
