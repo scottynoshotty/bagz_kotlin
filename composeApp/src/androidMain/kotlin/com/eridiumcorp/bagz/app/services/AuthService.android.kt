@@ -11,8 +11,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual class AuthService {
-    private val auth = Firebase.auth
+actual class AuthService(private val auth: FirebaseAuth) {
 
     actual fun currentUser(): Flow<User?> = callbackFlow {
         val listener =

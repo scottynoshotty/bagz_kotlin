@@ -7,12 +7,9 @@ import com.eridiumcorp.bagz.components.app.AppViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.core.component.inject
-import kotlin.getValue
 
-class HomeViewModel : AppViewModel() {
-    private val authService: AuthService by inject()
-    private val accountsRepository: AccountsRepository by inject()
+class HomeViewModel(val authService: AuthService, val accountsRepository: AccountsRepository) :
+    AppViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()

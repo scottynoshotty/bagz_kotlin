@@ -1,17 +1,17 @@
 package com.eridiumcorp.bagz.app.repositories
 
 import com.eridiumcorp.bagz.app.models.Account
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AccountsRepository {
-    private val firestore = FirebaseFirestore.getInstance()
-    private val auth = Firebase.auth
+class AccountsRepository(
+    private val firestore: FirebaseFirestore,
+    private val auth: FirebaseAuth,
+) {
 
     fun getLinkedAccounts(): Flow<List<Account>> {
         return firestore.collection("accounts")

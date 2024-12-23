@@ -12,11 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.core.component.inject
 
-class SignInViewModel(val applicationContext: Context) : AppViewModel() {
-
-    private val authService: AuthService by inject()
+class SignInViewModel(val applicationContext: Context, val authService: AuthService) :
+    AppViewModel() {
 
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()

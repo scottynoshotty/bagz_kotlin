@@ -7,11 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.core.component.inject
-import kotlin.getValue
 
-class LandingViewModel : AppViewModel() {
-    private val authService: AuthService by inject()
+class LandingViewModel(val authService: AuthService) : AppViewModel() {
 
     private val _uiState = MutableStateFlow(LandingUiState())
     val uiState: StateFlow<LandingUiState> = _uiState.asStateFlow()

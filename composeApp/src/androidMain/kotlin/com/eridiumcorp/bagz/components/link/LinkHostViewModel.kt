@@ -6,11 +6,8 @@ import com.plaid.link.linkTokenConfiguration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.koin.core.component.inject
-import kotlin.getValue
 
-class LinkHostViewModel : AppViewModel() {
-    private val plaidService: PlaidService by inject()
+class LinkHostViewModel(private val plaidService: PlaidService) : AppViewModel() {
 
     private val _uiState = MutableStateFlow(LinkHostUiState())
     val uiState: StateFlow<LinkHostUiState> = _uiState.asStateFlow()

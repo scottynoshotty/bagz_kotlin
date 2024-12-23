@@ -1,11 +1,9 @@
 package com.eridiumcorp.bagz.app.services
 
-import com.google.firebase.Firebase
-import com.google.firebase.functions.functions
+import com.google.firebase.functions.FirebaseFunctions
 import kotlinx.coroutines.tasks.await
 
-class PlaidService {
-    private val functions = Firebase.functions
+class PlaidService(private val functions: FirebaseFunctions) {
 
     suspend fun createPlaidLinkToken(): String? {
         val data = mapOf(

@@ -1,22 +1,33 @@
 package com.eridiumcorp.bagz
 
 import com.eridiumcorp.bagz.app.repositories.AccountsRepository
+import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
 import com.eridiumcorp.bagz.app.services.PlaidService
+import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsViewModel
 import com.eridiumcorp.bagz.components.home.HomeViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.link.LinkHostViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.functions
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { SignInViewModel(androidContext()) }
-    viewModel { LandingViewModel() }
-    viewModel { HomeViewModel() }
-    viewModel { LinkHostViewModel() }
-    single { AuthService() }
-    single { PlaidService() }
-    single { AccountsRepository() }
+    single { FirebaseFirestore.getInstance() }
+    single { Firebase.auth }
+    single { Firebase.functions }
+    single { AuthService(get()) }
+    single { PlaidService(get()) }
+    single { AccountsRepository(get(), get()) }
+    single { TransactionsRepository(get(), get()) }
+    viewModel { SignInViewModel(androidContext(), get()) }
+    viewModel { LandingViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
+    viewModel { LinkHostViewModel(get()) }
+    viewModel { AccountDetailsViewModel() }
 }
