@@ -16,7 +16,7 @@ class LandingViewModel(val authService: AuthService) : AppViewModel() {
     init {
         viewModelScope.launch {
             authService.currentUser().collect { user ->
-                _uiState.value = LandingUiState(user)
+                _uiState.value = _uiState.value.copy(loading = false, user = user)
             }
         }
     }
