@@ -1,11 +1,12 @@
 package com.eridiumcorp.bagz.components.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -48,20 +49,23 @@ actual fun HomeScreen(modifier: Modifier) {
         },
         modifier = modifier,
     ) { padding ->
-        if (uiState.value.accounts.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("There are no accounts.")
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            when {
+                uiState.value.loading -> CircularProgressIndicator()
+                uiState.value.accounts.isEmpty() -> Text("There are no accounts.")
+                else -> AccountList(
+                    accounts = uiState.value.accounts,
+                    onAccountClick = {
+                        navController.navigate(AccountDetails(it.accountId))
+                    }
+                )
             }
-        } else {
-            AccountList(accounts = uiState.value.accounts, onAccountClick = {
-                navController.navigate(AccountDetails(it.accountId))
-            })
         }
-
     }
 }

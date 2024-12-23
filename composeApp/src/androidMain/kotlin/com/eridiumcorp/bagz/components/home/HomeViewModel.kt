@@ -17,7 +17,7 @@ class HomeViewModel(val authService: AuthService, val accountsRepository: Accoun
     init {
         viewModelScope.launch {
             accountsRepository.getLinkedAccounts().collect { accounts ->
-                _uiState.value = _uiState.value.copy(accounts = accounts)
+                _uiState.value = _uiState.value.copy(accounts = accounts, loading = false)
             }
         }
     }
