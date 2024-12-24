@@ -1,5 +1,6 @@
 package com.eridiumcorp.bagz.components.signin
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +21,10 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.collectAsState
+import androidx.credentials.Credential
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
@@ -31,13 +35,30 @@ import bagz.composeapp.generated.resources.money_bag_outline_white
 import bagz.composeapp.generated.resources.google_sign_in_button_label
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 actual fun SignInScreen(modifier: Modifier) {
-    val signInViewModel: SignInViewModel = koinViewModel<SignInViewModel>()
-    val uiState = signInViewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val viewModel = koinViewModel<SignInViewModel>()
+
+    LaunchedEffect(Unit) {
+        launchCredManBottomSheet(
+            context,
+            "120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com"
+        ) { credential ->
+            viewModel.signInWithGoogle(credential)
+        }
+    }
+
     Scaffold(modifier = modifier) { padding ->
         Column(
             modifier = modifier
@@ -54,9 +75,11 @@ actual fun SignInScreen(modifier: Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(0.dp))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.dp)
+            )
 
             Row {
                 Text(
@@ -71,7 +94,7 @@ actual fun SignInScreen(modifier: Modifier) {
                 )
             }
             GoogleSignInButton(
-                onClick = { signInViewModel.signInWithGoogle() },
+                { credential -> viewModel.signInWithGoogle(credential) }
             )
         }
     }
@@ -80,11 +103,35 @@ actual fun SignInScreen(modifier: Modifier) {
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun GoogleSignInButton(
-    onClick: () -> Unit,
+    onRequestResult: (Credential) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     ElevatedButton(
-        onClick = onClick,
+        onClick = {
+            coroutineScope.launch {
+                try {
+                    val signInWithGoogleOption = GetSignInWithGoogleOption
+                        .Builder(serverClientId = "120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com")
+                        .build()
+
+                    val request = GetCredentialRequest.Builder()
+                        .addCredentialOption(signInWithGoogleOption)
+                        .build()
+
+                    val result = CredentialManager.create(context).getCredential(
+                        request = request,
+                        context = context
+                    )
+                    onRequestResult(result.credential)
+                } catch (_: NoCredentialException) {
+
+                } catch (_: GetCredentialException) {
+
+                }
+            }
+        },
         modifier = modifier
             .fillMaxWidth()
             .padding(start = 24.dp, top = 0.dp, bottom = 112.dp, end = 24.dp),
@@ -110,5 +157,29 @@ fun GoogleSignInButton(
             )
             Spacer(modifier = Modifier.width(8.dp))
         }
+    }
+}
+
+suspend fun launchCredManBottomSheet(
+    context: Context,
+    oauthClientId: String,
+    onRequestResult: (Credential) -> Unit,
+) {
+    try {
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setServerClientId(oauthClientId)
+            .build()
+
+        val request = GetCredentialRequest(listOf(googleIdOption))
+
+        val result = CredentialManager.create(context).getCredential(
+            request = request,
+            context = context
+        )
+        onRequestResult(result.credential)
+    } catch (_: NoCredentialException) {
+
+    } catch (_: GetCredentialException) {
+
     }
 }

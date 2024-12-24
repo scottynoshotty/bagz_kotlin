@@ -14,7 +14,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.functions
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -26,7 +25,7 @@ val appModule = module {
     single { PlaidService(get()) }
     single { AccountsRepository(get(), get()) }
     single { TransactionsRepository(get(), get()) }
-    viewModel { SignInViewModel(androidContext(), get()) }
+    viewModel { SignInViewModel(get()) }
     viewModel { LandingViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
     viewModel { LinkHostViewModel(get()) }
