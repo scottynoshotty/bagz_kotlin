@@ -38,7 +38,7 @@ actual fun SignInScreen(modifier: Modifier) {
     Scaffold(modifier = modifier) { padding ->
         Column(
             modifier = modifier
-                .padding(padding)
+                .padding()
                 .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
