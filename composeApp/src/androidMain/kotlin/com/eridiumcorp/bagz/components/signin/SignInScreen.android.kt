@@ -32,16 +32,12 @@ actual fun SignInScreen(modifier: Modifier) {
         ) {
             Text(
                 style = MaterialTheme.typography.headlineMedium,
-                text = stringResource(Res.string.app_name))
-            if (uiState.value.user == null) {
-                Text(text = "No current user")
-                GoogleSignInButton {
-                    signInViewModel.signInWithGoogle()
-                }
-            } else {
-                Text(text = "Greetings ${uiState.value.user!!.displayName}")
-                SignOutButton { signInViewModel.signOut() }
+                text = stringResource(Res.string.app_name)
+            )
+            GoogleSignInButton {
+                signInViewModel.signInWithGoogle()
             }
+
         }
     }
 }
