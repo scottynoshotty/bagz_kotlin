@@ -66,6 +66,10 @@ kotlin {
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.androidx.paging.runtime)
             implementation(libs.androidx.paging.compose)
+            implementation(libs.androidx.material3)
+            implementation(libs.androidx.material3.window.size)
+            implementation(libs.androidx.material3.adaptive.navigation.suite)
+            implementation(libs.androidx.ui.text.google.fonts)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

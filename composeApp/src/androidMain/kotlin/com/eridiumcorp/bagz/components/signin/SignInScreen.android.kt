@@ -7,8 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import bagz.composeapp.generated.resources.Res
@@ -29,7 +30,9 @@ actual fun SignInScreen(modifier: Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = stringResource(Res.string.app_name))
+            Text(
+                style = MaterialTheme.typography.headlineMedium,
+                text = stringResource(Res.string.app_name))
             if (uiState.value.user == null) {
                 Text(text = "No current user")
                 GoogleSignInButton {

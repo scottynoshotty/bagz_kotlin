@@ -1,8 +1,8 @@
 package com.eridiumcorp.bagz
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.eridiumcorp.bagz.components.Bagz
+import com.eridiumcorp.bagz.components.ui.theme.BagzTheme
 
 @Composable
-actual fun App() = MaterialTheme { Bagz() }
+actual fun App() = BagzTheme { Bagz() }
