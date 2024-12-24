@@ -61,14 +61,14 @@ actual fun SignInScreen(modifier: Modifier) {
 
     Scaffold(modifier = modifier) { padding ->
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding()
                 .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary, // Top color
-                            MaterialTheme.colorScheme.secondary // Bottom color
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.secondary
                         )
                     )
                 ),
@@ -94,7 +94,8 @@ actual fun SignInScreen(modifier: Modifier) {
                 )
             }
             GoogleSignInButton(
-                { credential -> viewModel.signInWithGoogle(credential) }
+                { credential -> viewModel.signInWithGoogle(credential) },
+                "120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com"
             )
         }
     }
@@ -104,16 +105,24 @@ actual fun SignInScreen(modifier: Modifier) {
 @Composable
 fun GoogleSignInButton(
     onRequestResult: (Credential) -> Unit,
+    oauthClientId: String,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     ElevatedButton(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 24.dp, top = 0.dp, bottom = 112.dp, end = 24.dp),
+        colors = ButtonDefaults.elevatedButtonColors(
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.onTertiary
+        ),
         onClick = {
             coroutineScope.launch {
                 try {
                     val signInWithGoogleOption = GetSignInWithGoogleOption
-                        .Builder(serverClientId = "120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com")
+                        .Builder(serverClientId = oauthClientId)
                         .build()
 
                     val request = GetCredentialRequest.Builder()
@@ -132,13 +141,6 @@ fun GoogleSignInButton(
                 }
             }
         },
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 24.dp, top = 0.dp, bottom = 112.dp, end = 24.dp),
-        colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.onTertiary
-        )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
