@@ -10,13 +10,13 @@ import kotlinx.coroutines.launch
 
 class LandingViewModel(val authService: AuthService) : AppViewModel() {
 
-    private val _uiState = MutableStateFlow(LandingUiState())
+    private val _uiState = MutableStateFlow(LandingUiState(userId = authService.currentUserId()))
     val uiState: StateFlow<LandingUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             authService.currentUser().collect { user ->
-                _uiState.value = _uiState.value.copy(loading = false, user = user)
+                _uiState.value = _uiState.value.copy(userId = user?.id)
             }
         }
     }
