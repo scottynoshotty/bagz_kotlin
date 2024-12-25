@@ -115,8 +115,8 @@ fun GoogleSignInButton(
             .fillMaxWidth()
             .padding(start = 24.dp, top = 0.dp, bottom = 112.dp, end = 24.dp),
         colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.onTertiary
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
         ),
         onClick = {
             coroutineScope.launch {
