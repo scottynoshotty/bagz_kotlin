@@ -7,7 +7,7 @@ class PlaidService(private val functions: FirebaseFunctions) {
 
     suspend fun createPlaidLinkToken(): String? {
         val data = mapOf(
-            "products" to listOf("assets", "transactions")
+            "products" to listOf("transactions")
         )
 
         val result = functions.getHttpsCallable("create_plaid_link_token").call(data).await()

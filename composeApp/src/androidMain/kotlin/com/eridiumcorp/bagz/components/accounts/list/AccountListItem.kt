@@ -17,6 +17,11 @@ import com.eridiumcorp.bagz.app.models.Account
 
 @Composable
 fun AccountListItem(account: Account, onAccountClick: (Account) -> Unit) {
+    val balance = when {
+        account.balances.available != null -> account.balances.available.toString()
+        account.balances.current != null -> account.balances.current.toString()
+        else -> "N/A"
+    }
     Card(
         elevation = 4.dp,
         modifier = Modifier
@@ -38,7 +43,7 @@ fun AccountListItem(account: Account, onAccountClick: (Account) -> Unit) {
                 style = MaterialTheme.typography.body1
             )
             Text(
-                text = "Available Balance: ${account.balances.available?.let { "\$$it" } ?: "N/A"}",
+                text = "Available Balance: $balance",
                 style = MaterialTheme.typography.body1.copy(color = Color.Green)
             )
             account.mask?.let {
