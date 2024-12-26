@@ -20,9 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.components.LocalNavController
-import com.eridiumcorp.bagz.components.accounts.details.AccountDetails
-import com.eridiumcorp.bagz.components.accounts.list.AccountList
 import com.eridiumcorp.bagz.components.link.LinkHost
+import com.eridiumcorp.bagz.components.reports.ReportSummary
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -58,13 +57,8 @@ actual fun HomeScreen(modifier: Modifier) {
         ) {
             when {
                 uiState.value.loading -> CircularProgressIndicator()
-                uiState.value.accounts.isEmpty() -> Text("There are no accounts.")
-                else -> AccountList(
-                    accounts = uiState.value.accounts,
-                    onAccountClick = {
-                        navController.navigate(AccountDetails(it.accountId))
-                    }
-                )
+                uiState.value.report != null -> ReportSummary(uiState.value.report!!)
+                else -> Text("No report available")
             }
         }
     }

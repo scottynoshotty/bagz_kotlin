@@ -1,10 +1,8 @@
 package com.eridiumcorp.bagz.components.home
 
-import com.eridiumcorp.bagz.app.models.Account
-import com.eridiumcorp.bagz.app.models.User
+import com.eridiumcorp.bagz.app.models.Report
 
 data class HomeUiState(
     val loading: Boolean = true,
-    val user: User? = null,
-    val accounts: List<Account> = emptyList(),
+    val report: Report? = null,
 )

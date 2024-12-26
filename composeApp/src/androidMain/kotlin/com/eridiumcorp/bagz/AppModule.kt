@@ -2,6 +2,7 @@ package com.eridiumcorp.bagz
 
 import androidx.lifecycle.SavedStateHandle
 import com.eridiumcorp.bagz.app.repositories.AccountsRepository
+import com.eridiumcorp.bagz.app.repositories.ReportsRepository
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
 import com.eridiumcorp.bagz.app.services.PlaidService
@@ -25,6 +26,7 @@ val appModule = module {
     single { PlaidService(get()) }
     single { AccountsRepository(get(), get()) }
     single { TransactionsRepository(get(), get()) }
+    single { ReportsRepository(get(), get()) }
     viewModel { SignInViewModel(get()) }
     viewModel { LandingViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
