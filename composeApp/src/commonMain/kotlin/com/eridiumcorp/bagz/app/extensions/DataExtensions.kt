@@ -24,6 +24,7 @@ fun Map<String, Any?>.extractInt(key: String): Int? {
         is Int -> value
         is Double -> value.toInt()
         is Float -> value.toInt()
+        is Long -> value.toInt()
         is String -> value.toIntOrNull()
         else -> null
     }

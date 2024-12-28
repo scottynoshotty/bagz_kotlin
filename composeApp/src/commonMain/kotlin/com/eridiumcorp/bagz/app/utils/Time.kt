@@ -1,0 +1,22 @@
+package com.eridiumcorp.bagz.app.utils
+
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.Instant
+import kotlin.time.Duration.Companion.days
+
+fun getDaysOfYear(): Int {
+    val now = Clock.System.now()
+    val localDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+    val localDate = localDateTime.date
+    return localDate.dayOfYear
+}
+
+fun isWithinLast366Days(timestampSeconds: Int?): Boolean {
+    if (timestampSeconds == null) return false
+    val timestampInstant = Instant.fromEpochSeconds(timestampSeconds.toLong())
+    val now = Clock.System.now()
+    val oneYearAgo = now - 366.days
+    return timestampInstant >= oneYearAgo
+}

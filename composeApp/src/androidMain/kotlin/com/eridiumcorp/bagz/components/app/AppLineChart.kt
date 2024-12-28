@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.eridiumcorp.bagz.app.models.Holdings
+import com.eridiumcorp.bagz.app.models.Report
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.extensions.format
 import ir.ehsannarmani.compose_charts.models.AnimationMode
@@ -50,20 +52,14 @@ val dividerProperties = DividerProperties(
 
 
 @Composable
-fun AppLineChart(modifier: Modifier) {
+fun AppLineChart(report: Report, modifier: Modifier) {
+    val weeklyHoldings: List<Holdings?> = report.getLast7DaysHoldings()
+    val netWorthList = weeklyHoldings.mapNotNull { it?.holdingsData?.net }
     val data = remember {
         listOf(
             Line(
                 label = "",
-                values = listOf(
-                    88.0,
-                    56.0,
-                    70.0,
-                    45.0,
-                    26.0,
-                    39.0,
-                    67.0,
-                ),
+                values = netWorthList,
                 color = SolidColor(Color(0xffF7B731)),
                 strokeAnimationSpec = tween(2000, easing = EaseInOutCubic),
                 gradientAnimationDelay = 1000,
