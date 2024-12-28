@@ -1,5 +1,6 @@
 package com.eridiumcorp.bagz.components.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -30,6 +32,7 @@ actual fun HomeScreen(modifier: Modifier) {
     val navController = LocalNavController.current
     val uiState = viewModel.uiState.collectAsState()
     Scaffold(
+        modifier = modifier,
         floatingActionButton = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -46,12 +49,12 @@ actual fun HomeScreen(modifier: Modifier) {
                 }
             }
         },
-        modifier = modifier,
     ) { padding ->
         Column(
             modifier = Modifier
+                .padding()
                 .fillMaxSize()
-                .padding(padding),
+                .background(MaterialTheme.colorScheme.primary), // Set background color
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

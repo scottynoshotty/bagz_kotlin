@@ -1,7 +1,5 @@
 package com.eridiumcorp.bagz.components.app
 
-import androidx.compose.animation.core.EaseInOutCubic
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,52 +23,24 @@ import com.eridiumcorp.bagz.app.models.Report
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.extensions.format
 import ir.ehsannarmani.compose_charts.models.AnimationMode
-import ir.ehsannarmani.compose_charts.models.DividerProperties
-import ir.ehsannarmani.compose_charts.models.DotProperties
-import ir.ehsannarmani.compose_charts.models.DrawStyle
-import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
 import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
 import ir.ehsannarmani.compose_charts.models.LabelProperties
 import ir.ehsannarmani.compose_charts.models.Line
-import ir.ehsannarmani.compose_charts.models.LineProperties
 import ir.ehsannarmani.compose_charts.models.PopupProperties
-import ir.ehsannarmani.compose_charts.models.StrokeStyle
-
-val gridProperties = GridProperties(enabled = false)
-val dividerProperties = DividerProperties(
-    xAxisProperties = LineProperties(
-        thickness = .2.dp,
-        color = SolidColor(Color.Gray.copy(alpha = .5f)),
-        style = StrokeStyle.Dashed(intervals = floatArrayOf(15f, 15f), phase = 10f),
-    ),
-    yAxisProperties = LineProperties(
-        thickness = .2.dp,
-        color = SolidColor(Color.Gray.copy(alpha = .5f)),
-        style = StrokeStyle.Dashed(intervals = floatArrayOf(15f, 15f), phase = 10f),
-    )
-)
 
 
 @Composable
 fun AppLineChart(report: Report, modifier: Modifier) {
     val weeklyHoldings: List<Holdings?> = report.getLast7DaysHoldings()
     val netWorthList = weeklyHoldings.mapNotNull { it?.holdingsData?.net }
+    val chartColor = MaterialTheme.colorScheme.primary
     val data = remember {
         listOf(
             Line(
                 label = "",
                 values = netWorthList,
-                color = SolidColor(Color(0xffF7B731)),
-                strokeAnimationSpec = tween(2000, easing = EaseInOutCubic),
-                gradientAnimationDelay = 1000,
-                drawStyle = DrawStyle.Stroke(),
-                dotProperties = DotProperties(
-                    enabled = true,
-                    color = SolidColor(Color(0xffE1E2EC)),
-                    strokeWidth = 1.dp,
-                    strokeColor = SolidColor(Color(0xffF7B731)),
-                )
+                color = SolidColor(chartColor)
             ),
         )
     }
@@ -96,8 +67,6 @@ fun AppLineChart(report: Report, modifier: Modifier) {
                 animationMode = AnimationMode.Together(delayBuilder = {
                     it * 500L
                 }),
-                gridProperties = gridProperties,
-                dividerProperties = dividerProperties,
                 popupProperties = PopupProperties(
                     textStyle = TextStyle(
                         fontSize = 11.sp,
