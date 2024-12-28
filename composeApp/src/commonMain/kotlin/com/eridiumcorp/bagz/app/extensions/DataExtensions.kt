@@ -18,6 +18,17 @@ fun Map<String, Any?>.extractString(key: String): String? {
     }
 }
 
+fun Map<String, Any?>.extractInt(key: String): Int? {
+    val value = this[key]
+    return when (value) {
+        is Int -> value
+        is Double -> value.toInt()
+        is Float -> value.toInt()
+        is String -> value.toIntOrNull()
+        else -> null
+    }
+}
+
 fun Map<String, Any?>.extractBoolean(key: String): Boolean? {
     val value = this[key]
     return value as? Boolean

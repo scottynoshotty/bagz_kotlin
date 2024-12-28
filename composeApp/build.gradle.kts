@@ -70,6 +70,7 @@ kotlin {
             implementation(libs.androidx.material3.window.size)
             implementation(libs.androidx.material3.adaptive.navigation.suite)
             implementation(libs.androidx.ui.text.google.fonts)
+            implementation (libs.compose.charts)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
