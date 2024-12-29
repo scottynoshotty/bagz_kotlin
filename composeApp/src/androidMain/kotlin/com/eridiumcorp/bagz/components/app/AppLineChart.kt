@@ -33,7 +33,7 @@ fun AppLineChart(values: List<Double>, labels: List<String>, modifier: Modifier 
     LineChart(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 8.dp)
             .height(250.dp),
         data = data,
         labelProperties = LabelProperties(
