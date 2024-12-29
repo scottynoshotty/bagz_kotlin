@@ -15,34 +15,31 @@ data class Report(
 
     fun getWeeklyHoldings(): List<Holdings?> {
         val currentDayOfYear = getCurrentDayOfYear()
-        val weeklyHoldings = (currentDayOfYear - 6..currentDayOfYear - 1).map { dayOfYear ->
+        val weeklyHoldings = (currentDayOfYear - 6..currentDayOfYear).map { dayOfYear ->
             holdingsMap[dayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
         }.toMutableList()
         // Add current day holdings as the last element
-        weeklyHoldings.add(getCurrentDayHoldings())
         return weeklyHoldings
     }
 
     fun getMonthlyHoldings(): List<Holdings?> {
         val currentDayOfYear = getCurrentDayOfYear()
-        val monthlyHoldings = (0..5).map { index ->  // Sample every 5 days, excluding the last day
+        val monthlyHoldings = (0..6).map { index ->  // Sample every 5 days, excluding the last day
             val dayOfYear = currentDayOfYear - (index * 5)
             holdingsMap[dayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
         }.toMutableList()
-        // Add current day holdings as the last element
-        monthlyHoldings.add(getCurrentDayHoldings())
+        monthlyHoldings.reverse()
         return monthlyHoldings
     }
 
     fun getYearlyHoldings(): List<Holdings?> {
         val currentDayOfYear = getCurrentDayOfYear()
-        val yearlyHoldings = (0..5).map { index ->  // Sample every 52 days, excluding the last day
+        val yearlyHoldings = (0..6).map { index ->  // Sample every 52 days, excluding the last day
             val dayOfYear = currentDayOfYear - (index * 52)
             val adjustedDayOfYear = (dayOfYear).takeIf { it > 0 } ?: (dayOfYear + 365)
             holdingsMap[adjustedDayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
         }.toMutableList()
-        // Add current day holdings as the last element
-        yearlyHoldings.add(getCurrentDayHoldings())
+        yearlyHoldings.reverse()
         return yearlyHoldings
     }
 

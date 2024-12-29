@@ -2,9 +2,13 @@ package com.eridiumcorp.bagz.components.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.eridiumcorp.bagz.app.models.Holdings
 import com.eridiumcorp.bagz.app.models.Report
 import com.eridiumcorp.bagz.app.repositories.ReportsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
+import com.eridiumcorp.bagz.app.utils.getAbbreviatedMonthName
+import com.eridiumcorp.bagz.app.utils.getDayOfWeekString
+import com.eridiumcorp.bagz.app.utils.getMonthDayString
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -22,6 +26,10 @@ class HomeViewModel(val authService: AuthService, val reportsRepository: Reports
                 _uiState.value = _uiState.value.copy(
                     report = report,
                     loading = false,
+                    graphLabels = calculateGraphLabels(
+                        report,
+                        _uiState.value.reportTimePeriod,
+                    ),
                     graphValues = calculateGraphValues(
                         report,
                         _uiState.value.reportTimePeriod,
@@ -43,11 +51,7 @@ class HomeViewModel(val authService: AuthService, val reportsRepository: Reports
         timePeriod: ReportTimePeriod,
         holdingsType: ReportHoldingsType,
     ): List<Double> {
-        return when (timePeriod) {
-            ReportTimePeriod.WEEK -> report.getWeeklyHoldings()
-            ReportTimePeriod.MONTH -> report.getMonthlyHoldings()
-            ReportTimePeriod.YEAR -> report.getYearlyHoldings()
-        }.mapNotNull { holdings ->
+        return getGraphHoldings(report, timePeriod).mapNotNull { holdings ->
             when (holdingsType) {
                 ReportHoldingsType.NET -> holdings?.holdingsData?.net
                 ReportHoldingsType.CASH -> holdings?.holdingsData?.cash
@@ -57,12 +61,40 @@ class HomeViewModel(val authService: AuthService, val reportsRepository: Reports
         }
     }
 
+    private fun calculateGraphLabels(
+        report: Report,
+        timePeriod: ReportTimePeriod,
+    ): List<String> {
+        return getGraphHoldings(report, timePeriod).mapNotNull { holdings ->
+            when (timePeriod) {
+                ReportTimePeriod.WEEK -> getDayOfWeekString(holdings?.timestampSeconds ?: 0)
+                ReportTimePeriod.MONTH -> getMonthDayString(holdings?.timestampSeconds ?: 0)
+                ReportTimePeriod.YEAR -> getAbbreviatedMonthName(holdings?.timestampSeconds ?: 0)
+            }
+        }
+    }
+
+    private fun getGraphHoldings(
+        report: Report,
+        timePeriod: ReportTimePeriod,
+    ): List<Holdings?> {
+        return when (timePeriod) {
+            ReportTimePeriod.WEEK -> report.getWeeklyHoldings()
+            ReportTimePeriod.MONTH -> report.getMonthlyHoldings()
+            ReportTimePeriod.YEAR -> report.getYearlyHoldings()
+        }
+    }
+
     fun setReportTimePeriod(timePeriod: ReportTimePeriod) {
         _uiState.update { currentState ->
             currentState.copy(
                 reportTimePeriod = timePeriod,
-                graphValues = calculateGraphValues(
+                graphLabels = calculateGraphLabels(
                     currentState.report!!,
+                    timePeriod,
+                ),
+                graphValues = calculateGraphValues(
+                    currentState.report,
                     timePeriod,
                     currentState.reportHoldingsType
                 )

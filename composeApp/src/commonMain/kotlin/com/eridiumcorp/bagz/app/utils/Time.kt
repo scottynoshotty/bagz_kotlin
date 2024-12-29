@@ -20,3 +20,25 @@ fun isWithinLast366Days(timestampSeconds: Int?): Boolean {
     val oneYearAgo = now - 366.days
     return timestampInstant >= oneYearAgo
 }
+
+fun getAbbreviatedMonthName(timestampSeconds: Int): String {
+    val timestampInstant = Instant.fromEpochSeconds(timestampSeconds.toLong())
+    val localDateTime = timestampInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+    val month = localDateTime.month
+    return month.name.substring(0, 3)
+}
+
+fun getMonthDayString(timestampSeconds: Int): String {
+    val timestampInstant = Instant.fromEpochSeconds(timestampSeconds.toLong())
+    val localDateTime = timestampInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+    val month = localDateTime.month.name.substring(0, 3)
+    val day = localDateTime.dayOfMonth
+    return "$month $day"
+}
+
+fun getDayOfWeekString(timestampSeconds: Int): String {
+    val timestampInstant = Instant.fromEpochSeconds(timestampSeconds.toLong())
+    val localDateTime = timestampInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+    val dayOfWeek = localDateTime.dayOfWeek
+    return dayOfWeek.name.substring(0, 3)
+}

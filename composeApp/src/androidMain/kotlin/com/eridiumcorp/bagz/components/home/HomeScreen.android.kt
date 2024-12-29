@@ -76,7 +76,7 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier) {
                 )
 
                 // Holdings chart
-                AppLineChart(uiState.graphValues)
+                AppLineChart(values = uiState.graphValues, labels = uiState.graphLabels)
             } else {
                 Text("No report available")
             }

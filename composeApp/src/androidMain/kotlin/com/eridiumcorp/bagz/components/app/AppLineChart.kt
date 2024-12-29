@@ -12,12 +12,12 @@ import com.eridiumcorp.bagz.app.utils.formatDouble
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
-import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
+import ir.ehsannarmani.compose_charts.models.LabelProperties
 import ir.ehsannarmani.compose_charts.models.Line
 
 
 @Composable
-fun AppLineChart(values: List<Double>, modifier: Modifier = Modifier) {
+fun AppLineChart(values: List<Double>, labels: List<String>, modifier: Modifier = Modifier) {
     val chartLineColor = MaterialTheme.colorScheme.primary
     val data =
         listOf(
@@ -35,8 +35,9 @@ fun AppLineChart(values: List<Double>, modifier: Modifier = Modifier) {
             .padding(8.dp)
             .height(250.dp),
         data = data,
-        labelHelperProperties = LabelHelperProperties(
-            enabled = false,
+        labelProperties = LabelProperties(
+            enabled = true,
+            labels = labels
         ),
         gridProperties = GridProperties(enabled = false),
         indicatorProperties = HorizontalIndicatorProperties(
