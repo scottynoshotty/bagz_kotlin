@@ -13,6 +13,6 @@ actual fun LandingScreen(modifier: Modifier) {
     val uiState = landingViewModel.uiState.collectAsState()
     when {
         uiState.value.userId == null -> SignInScreen(modifier)
-        else -> HomeScreen(modifier)
+        else -> HomeScreen(modifier = modifier)
     }
 }
