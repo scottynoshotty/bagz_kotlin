@@ -12,6 +12,7 @@ import com.eridiumcorp.bagz.app.utils.formatDouble
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
+import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
 import ir.ehsannarmani.compose_charts.models.LabelProperties
 import ir.ehsannarmani.compose_charts.models.Line
 
@@ -39,6 +40,7 @@ fun AppLineChart(values: List<Double>, labels: List<String>, modifier: Modifier 
             enabled = true,
             labels = labels
         ),
+        labelHelperProperties = LabelHelperProperties(enabled = false),
         gridProperties = GridProperties(enabled = false),
         indicatorProperties = HorizontalIndicatorProperties(
             contentBuilder = { indicator ->
