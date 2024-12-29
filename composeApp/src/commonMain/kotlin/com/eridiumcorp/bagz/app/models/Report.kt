@@ -1,39 +1,49 @@
 package com.eridiumcorp.bagz.app.models
 
 import com.eridiumcorp.bagz.app.extensions.extractMap
-import com.eridiumcorp.bagz.app.utils.getDaysOfYear
+import com.eridiumcorp.bagz.app.utils.getCurrentDayOfYear
 import com.eridiumcorp.bagz.app.utils.isWithinLast366Days
 
 data class Report(
     val holdingsMap: Map<String, Holdings>,
 ) {
     fun getCurrentDayHoldings(): Holdings? {
-        val currentDayOfYear = getDaysOfYear()
+        val currentDayOfYear = getCurrentDayOfYear()
         val holdings = holdingsMap[currentDayOfYear.toString()]
         return holdings?.takeIf { isWithinLast366Days(it.timestampSeconds) }
     }
 
-    fun getLast7DaysHoldings(): List<Holdings?> {
-        val currentDayOfYear = getDaysOfYear()
-        return (currentDayOfYear - 6..currentDayOfYear).map { dayOfYear ->
+    fun getWeeklyHoldings(): List<Holdings?> {
+        val currentDayOfYear = getCurrentDayOfYear()
+        val weeklyHoldings = (currentDayOfYear - 6..currentDayOfYear - 1).map { dayOfYear ->
             holdingsMap[dayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
-        }
+        }.toMutableList()
+        // Add current day holdings as the last element
+        weeklyHoldings.add(getCurrentDayHoldings())
+        return weeklyHoldings
     }
 
-    fun getLast30DaysHoldings(): List<Holdings?> {
-        val currentDayOfYear = getDaysOfYear()
-        return (currentDayOfYear - 29..currentDayOfYear).map { dayOfYear ->
+    fun getMonthlyHoldings(): List<Holdings?> {
+        val currentDayOfYear = getCurrentDayOfYear()
+        val monthlyHoldings = (0..5).map { index ->  // Sample every 5 days, excluding the last day
+            val dayOfYear = currentDayOfYear - (index * 5)
             holdingsMap[dayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
-        }
+        }.toMutableList()
+        // Add current day holdings as the last element
+        monthlyHoldings.add(getCurrentDayHoldings())
+        return monthlyHoldings
     }
 
-    fun getLast365DaysHoldings(): List<Holdings?> {
-        val currentDayOfYear = getDaysOfYear()
-        return (1..365).map { dayOfYear ->
-            val adjustedDayOfYear =
-                (currentDayOfYear - 365 + dayOfYear).takeIf { it > 0 } ?: (dayOfYear + 365)
+    fun getYearlyHoldings(): List<Holdings?> {
+        val currentDayOfYear = getCurrentDayOfYear()
+        val yearlyHoldings = (0..5).map { index ->  // Sample every 52 days, excluding the last day
+            val dayOfYear = currentDayOfYear - (index * 52)
+            val adjustedDayOfYear = (dayOfYear).takeIf { it > 0 } ?: (dayOfYear + 365)
             holdingsMap[adjustedDayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
-        }
+        }.toMutableList()
+        // Add current day holdings as the last element
+        yearlyHoldings.add(getCurrentDayHoldings())
+        return yearlyHoldings
     }
 
     companion object {

@@ -6,7 +6,7 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.days
 
-fun getDaysOfYear(): Int {
+fun getCurrentDayOfYear(): Int {
     val now = Clock.System.now()
     val localDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
     val localDate = localDateTime.date

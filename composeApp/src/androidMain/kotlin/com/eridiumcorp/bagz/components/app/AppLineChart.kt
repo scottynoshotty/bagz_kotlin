@@ -21,7 +21,7 @@ import ir.ehsannarmani.compose_charts.models.Line
 
 @Composable
 fun AppLineChart(report: Report, modifier: Modifier) {
-    val weeklyHoldings: List<Holdings?> = report.getLast7DaysHoldings()
+    val weeklyHoldings: List<Holdings?> = report.getYearlyHoldings()
     val netWorthList = weeklyHoldings.mapNotNull { it?.holdingsData?.net }
     val chartLineColor = MaterialTheme.colorScheme.primary
     val data = remember {
