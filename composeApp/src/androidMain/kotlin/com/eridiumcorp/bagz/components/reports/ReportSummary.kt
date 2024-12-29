@@ -32,8 +32,7 @@ fun ReportSummary(report: Report, modifier: Modifier = Modifier) {
 fun ReportCard(report: Report, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(4.dp),
+            .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         TimeSeriesGraph(report)
