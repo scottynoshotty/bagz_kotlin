@@ -7,6 +7,7 @@ import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
 import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsViewModel
+import com.eridiumcorp.bagz.components.home.BagWidgetViewModel
 import com.eridiumcorp.bagz.components.home.HomeViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.link.LinkHostViewModel
@@ -29,8 +30,9 @@ val appModule = module {
     single { ReportsRepository(get(), get()) }
     viewModel { SignInViewModel(get()) }
     viewModel { LandingViewModel(get()) }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get()) }
     viewModel { LinkHostViewModel(get()) }
+    viewModel { BagWidgetViewModel(get()) }
     viewModel { (savedStateHandle: SavedStateHandle) ->
         AccountDetailsViewModel(get(), get(), savedStateHandle)
     }
