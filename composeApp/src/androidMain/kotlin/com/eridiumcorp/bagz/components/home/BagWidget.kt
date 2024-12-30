@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -28,6 +29,8 @@ import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.sp
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.bag_widget_title
+import com.eridiumcorp.bagz.app.models.Report
+import com.eridiumcorp.bagz.app.utils.formatDouble
 import com.eridiumcorp.bagz.components.app.AppLineChart
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -53,21 +56,49 @@ fun BagWidget(viewModel: BagWidgetViewModel = koinViewModel(), modifier: Modifie
                             text = stringResource(Res.string.bag_widget_title),
                             style = MaterialTheme.typography.headlineLargeEmphasized
                         )
-                        Column(horizontalAlignment = Alignment.End) {
-                            SegmentedButtonSelector(
-                                selected = uiState.reportTimePeriod,
-                                onSelected = { viewModel.setReportTimePeriod(it) },
-                                options = ReportTimePeriod.values(),
-                            )
-                            SegmentedButtonSelector(
-                                selected = uiState.reportHoldingsType,
-                                onSelected = { viewModel.setReportHoldingsType(it) },
-                                options = ReportHoldingsType.values(),
-                            )
-                        }
+                        BagSummary(uiState.report!!)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     AppLineChart(values = uiState.graphValues, labels = uiState.graphLabels)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        SegmentedButtonSelector(
+                            selected = uiState.reportTimePeriod,
+                            onSelected = { viewModel.setReportTimePeriod(it) },
+                            options = ReportTimePeriod.values(),
+                        )
+                        SegmentedButtonSelector(
+                            selected = uiState.reportHoldingsType,
+                            onSelected = { viewModel.setReportHoldingsType(it) },
+                            options = ReportHoldingsType.values(),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BagSummary(report: Report, modifier: Modifier = Modifier) {
+    val currentHoldings = report.getCurrentDayHoldings()
+    if (currentHoldings != null) {
+        val net = currentHoldings.holdingsData.net
+        val cash = currentHoldings.holdingsData.cash
+        val invest = currentHoldings.holdingsData.investments
+        val debt = currentHoldings.holdingsData.debt
+        if (net != null && cash != null && invest != null && debt != null) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
+                Text("Net: ${formatDouble(net)}")
+                Row {
+                    Text("Cash: ${formatDouble(cash)}", fontSize = 11.sp)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Invest: ${formatDouble(invest)}", fontSize = 11.sp)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Debt: ${formatDouble(debt)}", fontSize = 11.sp)
                 }
             }
         }
@@ -97,7 +128,7 @@ fun <T : Enum<T>> SegmentedButtonSelector(
                     } else {
                         option.name
                     }
-                    Text(cappedName, fontSize = 8.sp)
+                    Text(cappedName, fontSize = 7.sp)
                 })
         }
     }
