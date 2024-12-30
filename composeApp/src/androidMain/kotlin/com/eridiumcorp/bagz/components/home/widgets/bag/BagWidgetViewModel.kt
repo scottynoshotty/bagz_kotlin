@@ -1,4 +1,4 @@
-package com.eridiumcorp.bagz.components.home
+package com.eridiumcorp.bagz.components.home.widgets.bag
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

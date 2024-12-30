@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.components.LocalNavController
-import com.eridiumcorp.bagz.components.home.BagWidget
+import com.eridiumcorp.bagz.components.home.widgets.bag.BagWidget
 import com.eridiumcorp.bagz.components.link.LinkHost
 import org.koin.androidx.compose.koinViewModel
 

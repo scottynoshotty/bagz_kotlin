@@ -1,4 +1,4 @@
-package com.eridiumcorp.bagz.components.home
+package com.eridiumcorp.bagz.components.home.widgets.bag
 
 import com.eridiumcorp.bagz.app.models.Report
 
