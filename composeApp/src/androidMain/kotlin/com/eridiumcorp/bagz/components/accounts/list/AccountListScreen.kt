@@ -8,6 +8,6 @@ import androidx.compose.ui.Modifier
 @Composable
 fun AccountListScreen(modifier: Modifier = Modifier) {
     Scaffold { padding ->
-        AccountList(modifier = modifier.padding())
+        AccountList(modifier = modifier.padding(padding))
     }
 }
