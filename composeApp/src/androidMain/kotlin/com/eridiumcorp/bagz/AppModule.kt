@@ -9,6 +9,7 @@ import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsViewModel
 import com.eridiumcorp.bagz.components.home.widgets.bag.BagWidgetViewModel
 import com.eridiumcorp.bagz.components.home.screen.HomeViewModel
+import com.eridiumcorp.bagz.components.home.widgets.accounts.AccountsWidgetViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.link.LinkHostViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel
@@ -33,6 +34,7 @@ val appModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { LinkHostViewModel(get()) }
     viewModel { BagWidgetViewModel(get()) }
+    viewModel { AccountsWidgetViewModel(get()) }
     viewModel { (savedStateHandle: SavedStateHandle) ->
         AccountDetailsViewModel(get(), get(), savedStateHandle)
     }

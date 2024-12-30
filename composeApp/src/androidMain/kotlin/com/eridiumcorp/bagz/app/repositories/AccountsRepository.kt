@@ -18,7 +18,7 @@ class AccountsRepository(
         return firestore.collection("accounts")
             .document(auth.uid!!)
             .collection("user_accounts")
-            .limit(30)
+            .limit(6)
             .snapshots()
             .map { snapshot ->
                 snapshot.documents.map { doc -> doc.toAccount() }

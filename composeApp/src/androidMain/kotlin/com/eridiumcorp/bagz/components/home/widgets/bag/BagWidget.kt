@@ -38,7 +38,7 @@ import com.eridiumcorp.bagz.components.app.AppLineChart
 fun BagWidget(viewModel: BagWidgetViewModel = koinViewModel(), modifier: Modifier = Modifier) {
     val uiState by viewModel.uiState.collectAsState()
     Card(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         when {
