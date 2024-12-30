@@ -8,7 +8,7 @@ import com.eridiumcorp.bagz.app.services.AuthService
 import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsViewModel
 import com.eridiumcorp.bagz.components.home.BagWidgetViewModel
-import com.eridiumcorp.bagz.components.home.HomeViewModel
+import com.eridiumcorp.bagz.components.home.screen.HomeViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.link.LinkHostViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel

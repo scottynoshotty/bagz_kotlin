@@ -3,7 +3,7 @@ package com.eridiumcorp.bagz.components.landing
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.eridiumcorp.bagz.components.home.HomeScreen
+import com.eridiumcorp.bagz.components.home.screen.HomeScreen
 import com.eridiumcorp.bagz.components.signin.SignInScreen
 import org.koin.androidx.compose.koinViewModel
 

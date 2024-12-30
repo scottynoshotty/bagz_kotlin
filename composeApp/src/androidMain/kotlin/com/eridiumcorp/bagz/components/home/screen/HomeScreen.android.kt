@@ -1,4 +1,4 @@
-package com.eridiumcorp.bagz.components.home
+package com.eridiumcorp.bagz.components.home.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.components.LocalNavController
+import com.eridiumcorp.bagz.components.home.BagWidget
 import com.eridiumcorp.bagz.components.link.LinkHost
 import org.koin.androidx.compose.koinViewModel
 
