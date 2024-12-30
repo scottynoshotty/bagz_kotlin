@@ -36,35 +36,38 @@ data class Transaction(
 ) {
     companion object {
         fun fromMap(map: Map<String, Any?>): Transaction {
+            val transactionData = map.extractMap("transaction_data") ?: emptyMap()
             return Transaction(
                 accountId = map.extractString("account_id") ?: "",
-                amount = (map.extractDouble("amount") ?: 0.0).toInt(),
-                isoCurrencyCode = map.extractString("iso_currency_code"),
-                unofficialCurrencyCode = map.extractString("unofficial_currency_code"),
-                date = map.extractString("date") ?: "",
-                location = Location.fromMap(map.extractMap("location") ?: emptyMap()),
-                name = map.extractString("name") ?: "",
-                merchantName = map.extractString("merchant_name"),
-                originalDescription = map.extractString("original_description"),
-                paymentMeta = PaymentMeta.fromMap(map.extractMap("payment_meta") ?: emptyMap()),
-                pending = map.extractBoolean("pending") == true,
-                pendingTransactionId = map.extractString("pending_transaction_id"),
-                accountOwner = map.extractString("account_owner"),
-                transactionId = map.extractString("transaction_id") ?: "",
-                logoUrl = map.extractString("logo_url"),
-                website = map.extractString("website"),
-                authorizedDate = map.extractString("authorized_date"),
-                authorizedDatetime = map.extractString("authorized_datetime"),
-                datetime = map.extractString("datetime"),
-                paymentChannel = map.extractString("payment_channel") ?: "",
-                personalFinanceCategory = PersonalFinanceCategory.fromMap(
-                    map.extractMap("personal_finance_category") ?: emptyMap()
+                amount = (transactionData.extractDouble("amount") ?: 0.0).toInt(),
+                isoCurrencyCode = transactionData.extractString("iso_currency_code"),
+                unofficialCurrencyCode = transactionData.extractString("unofficial_currency_code"),
+                date = transactionData.extractString("date") ?: "",
+                location = Location.fromMap(transactionData.extractMap("location") ?: emptyMap()),
+                name = transactionData.extractString("name") ?: "",
+                merchantName = transactionData.extractString("merchant_name"),
+                originalDescription = transactionData.extractString("original_description"),
+                paymentMeta = PaymentMeta.fromMap(
+                    transactionData.extractMap("payment_meta") ?: emptyMap()
                 ),
-                transactionCode = map.extractString("transaction_code"),
-                personalFinanceCategoryIconUrl = map.extractString("personal_finance_category_icon_url"),
-                counterparties = (map.extractMapList("counterparties") ?: emptyList())
+                pending = transactionData.extractBoolean("pending") == true,
+                pendingTransactionId = transactionData.extractString("pending_transaction_id"),
+                accountOwner = transactionData.extractString("account_owner"),
+                transactionId = map.extractString("transaction_id") ?: "",
+                logoUrl = transactionData.extractString("logo_url"),
+                website = transactionData.extractString("website"),
+                authorizedDate = transactionData.extractString("authorized_date"),
+                authorizedDatetime = transactionData.extractString("authorized_datetime"),
+                datetime = transactionData.extractString("datetime"),
+                paymentChannel = transactionData.extractString("payment_channel") ?: "",
+                personalFinanceCategory = PersonalFinanceCategory.fromMap(
+                    transactionData.extractMap("personal_finance_category") ?: emptyMap()
+                ),
+                transactionCode = transactionData.extractString("transaction_code"),
+                personalFinanceCategoryIconUrl = transactionData.extractString("personal_finance_category_icon_url"),
+                counterparties = (transactionData.extractMapList("counterparties") ?: emptyList())
                     .map { Counterparty.fromMap(it) },
-                merchantEntityId = map.extractString("merchant_entity_id"),
+                merchantEntityId = transactionData.extractString("merchant_entity_id"),
                 account = Account.fromMap(map.extractMap("account_data") ?: emptyMap())
             )
         }
