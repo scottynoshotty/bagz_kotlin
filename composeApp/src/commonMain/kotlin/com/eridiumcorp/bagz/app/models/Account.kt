@@ -14,14 +14,15 @@ data class Account(
 ) {
     companion object {
         fun fromMap(map: Map<String, Any?>): Account {
+            val accountData = map.extractMap("account_data") ?: emptyMap()
             return Account(
                 accountId = map.extractString("account_id") ?: "",
-                balances = Balances.fromMap(map.extractMap("balances") ?: emptyMap()),
-                mask = map.extractString("mask"),
-                name = map.extractString("name") ?: "",
-                officialName = map.extractString("official_name"),
-                accountType = map.extractString("type") ?: "Other",
-                institution = Institution.fromMap(map.extractMap("institution") ?: emptyMap())
+                balances = Balances.fromMap(accountData.extractMap("balances") ?: emptyMap()),
+                mask = accountData.extractString("mask"),
+                name = accountData.extractString("name") ?: "",
+                officialName = accountData.extractString("official_name"),
+                accountType = accountData.extractString("type") ?: "Other",
+                institution = Institution.fromMap(map.extractMap("institution_data") ?: emptyMap())
             )
         }
     }

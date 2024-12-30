@@ -38,7 +38,7 @@ fun AccountsWidget(
                         text = stringResource(Res.string.accounts_widget_title),
                         style = MaterialTheme.typography.headlineLargeEmphasized
                     )
-                    Text("You have linked ${uiState.accounts.size} accounts")
+                    AccountsGrid(accounts = uiState.accounts)
                 }
             }
         }
