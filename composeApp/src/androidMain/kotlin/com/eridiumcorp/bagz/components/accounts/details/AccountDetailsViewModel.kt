@@ -1,11 +1,9 @@
 package com.eridiumcorp.bagz.components.accounts.details
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
 import com.eridiumcorp.bagz.app.repositories.AccountsRepository
 import com.eridiumcorp.bagz.app.repositories.TransactionsPagingSource
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
