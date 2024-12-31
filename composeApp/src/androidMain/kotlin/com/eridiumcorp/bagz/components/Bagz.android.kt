@@ -12,6 +12,8 @@ import com.eridiumcorp.bagz.components.accounts.details.AccountDetails
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsScreen
 import com.eridiumcorp.bagz.components.accounts.list.AccountListRoute
 import com.eridiumcorp.bagz.components.accounts.list.AccountListScreen
+import com.eridiumcorp.bagz.components.activity.ActivityRoute
+import com.eridiumcorp.bagz.components.activity.ActivityScreen
 import com.eridiumcorp.bagz.components.landing.Landing
 import com.eridiumcorp.bagz.components.landing.LandingScreen
 import com.eridiumcorp.bagz.components.link.LinkHost
@@ -26,6 +28,7 @@ actual fun Bagz(modifier: Modifier) {
             composable<LinkHost> { LinkHostScreen(modifier) }
             composable<AccountDetails> { AccountDetailsScreen(modifier) }
             composable<AccountListRoute> { AccountListScreen(modifier) }
+            composable<ActivityRoute> { ActivityScreen(modifier = modifier) }
         }
     }
 }
