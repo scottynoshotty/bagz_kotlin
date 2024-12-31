@@ -54,7 +54,7 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = 
                     Image(
                         painter = painterResource(Res.drawable.money_bag_outline_white),
                         contentDescription = "App Logo",
-                        modifier = Modifier.size(38.dp)
+                        modifier = Modifier.size(38.dp).padding(bottom = 4.dp)
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
