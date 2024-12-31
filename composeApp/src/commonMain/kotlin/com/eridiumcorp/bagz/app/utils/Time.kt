@@ -42,3 +42,11 @@ fun getDayOfWeekString(timestampSeconds: Int): String {
     val dayOfWeek = localDateTime.dayOfWeek
     return dayOfWeek.name.substring(0, 3)
 }
+
+fun currentMonthActivityKey(): String {
+    val now = Clock.System.now()
+    val localDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+    val year = localDateTime.year
+    val month = localDateTime.month.value
+    return String.format("%04d-%02d", year, month)
+}

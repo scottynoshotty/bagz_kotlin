@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.components.LocalNavController
 import com.eridiumcorp.bagz.components.home.widgets.accounts.AccountsWidget
+import com.eridiumcorp.bagz.components.home.widgets.activity.ActivityWidget
 import com.eridiumcorp.bagz.components.home.widgets.bag.BagWidget
 import com.eridiumcorp.bagz.components.link.LinkHost
 import org.koin.androidx.compose.koinViewModel
@@ -52,10 +55,12 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = 
             }
         },
     ) { padding ->
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
-                .padding()
+                .padding(padding)
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .background(MaterialTheme.colorScheme.surface),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,9 +68,12 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = 
             if (uiState.loading) {
                 CircularProgressIndicator()
             } else {
+                BagWidget()
+                Spacer(modifier = Modifier.height(16.dp))
                 AccountsWidget()
                 Spacer(modifier = Modifier.height(16.dp))
-                BagWidget()
+                ActivityWidget()
+                Spacer(modifier = Modifier.height(100.dp))
             }
         }
     }
