@@ -50,3 +50,9 @@ fun currentMonthActivityKey(): String {
     val month = localDateTime.month.value
     return String.format("%04d-%02d", year, month)
 }
+
+fun getCurrentMonthName(): String {
+    val now = Clock.System.now()
+    val localDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+    return localDateTime.month.name
+}

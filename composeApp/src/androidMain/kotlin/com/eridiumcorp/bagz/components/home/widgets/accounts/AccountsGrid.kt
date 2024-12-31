@@ -40,7 +40,7 @@ fun AccountsGrid(accounts: List<Account>, modifier: Modifier = Modifier) {
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier.height(400.dp)
+        modifier = modifier.height(360.dp)
     ) {
         items(accounts) { account ->
             AccountGridItem(account)

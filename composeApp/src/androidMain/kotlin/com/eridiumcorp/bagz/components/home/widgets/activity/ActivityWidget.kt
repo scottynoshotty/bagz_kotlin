@@ -1,11 +1,10 @@
 package com.eridiumcorp.bagz.components.home.widgets.activity
 
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -15,13 +14,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.activity_widget_title
-import ir.ehsannarmani.compose_charts.PieChart
-import ir.ehsannarmani.compose_charts.models.Pie
+import com.eridiumcorp.bagz.app.utils.getCurrentMonthName
+import ir.ehsannarmani.compose_charts.ColumnChart
+import ir.ehsannarmani.compose_charts.models.Bars
+import ir.ehsannarmani.compose_charts.models.GridProperties
+import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,37 +46,38 @@ fun ActivityWidget(
             else -> {
                 val activity = uiState.activity!!
                 val activityData = activity.activityData!!
-                var data = activityData.map { activitySummary ->
-                    Pie(
-                        data = activitySummary.amount,
-                        label = activitySummary.type.name,
-                        color = activitySummary.type.color
+                var data = activityData.take(6).map { activitySummary ->
+                    Bars(
+                        label = activitySummary.type.name.substring(0, 3),
+                        values = listOf(
+                            Bars.Data(
+                                value = activitySummary.amount,
+                                color = SolidColor(activitySummary.type.color)
+                            )
+                        )
                     )
                 }
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
                     Text(
                         text = stringResource(Res.string.activity_widget_title),
                         style = MaterialTheme.typography.headlineLargeEmphasized
                     )
-                    PieChart(
-                        modifier = Modifier.size(200.dp).align(Alignment.CenterHorizontally),
+                    Text(
+                        text = getCurrentMonthName(),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    ColumnChart(
+                        modifier = Modifier
+                            .height(400.dp)
+                            .fillMaxWidth(),
                         data = data,
-                        style = Pie.Style.Fill,
-                        onPieClick = {
-                            println("123456789 ${it.label} Clicked")
-                            val pieIndex = data.indexOf(it)
-                            data =
-                                data.mapIndexed { mapIndex, pie -> pie.copy(selected = pieIndex == mapIndex) }
-                        },
-                        selectedScale = 1.2f,
-                        scaleAnimEnterSpec = spring<Float>(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessLow
-                        ),
-                        colorAnimEnterSpec = tween(300),
-                        colorAnimExitSpec = tween(300),
-                        scaleAnimExitSpec = tween(300),
-                        spaceDegreeAnimExitSpec = tween(300),
+                        labelHelperProperties = LabelHelperProperties(enabled = false),
+                        gridProperties = GridProperties(enabled = false)
                     )
                 }
             }

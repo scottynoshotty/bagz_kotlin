@@ -45,7 +45,11 @@ fun BagWidget(viewModel: BagWidgetViewModel = koinViewModel(), modifier: Modifie
             uiState.loading -> CircularProgressIndicator()
             uiState.report == null -> Text("No report available")
             else -> {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier

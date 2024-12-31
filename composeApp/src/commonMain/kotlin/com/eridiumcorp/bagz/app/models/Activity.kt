@@ -18,7 +18,7 @@ data class Activity(
             val activitySummaryList = currentActivity
                 .entries.mapNotNull { entry ->
                     ActivitySummary.fromEntry(entry)
-                }
+                }.sortedByDescending { it.amount }
             return Activity(activitySummaryList)
         }
     }
@@ -28,17 +28,15 @@ data class ActivitySummary(val type: ActivityType, val amount: Double) {
 
     companion object {
         fun fromEntry(entry: Map.Entry<String, Any?>): ActivitySummary? {
-            val amount = entry.value
-            if (amount is Double) {
-                if (amount < 1) {
-                    return null
-                }
+            val amount = when (entry.value) {
+                is Double -> entry.value as Double
+                is Int -> (entry.value as Int).toDouble()
+                is Float -> (entry.value as Float).toDouble()
+                else -> null
+            }
+            if (amount != null && amount >= 1) {
                 val activityType = ActivityType.fromString(entry.key)
                 if (activityType != null) {
-                    println("123456789 --------------------------------------------")
-                    println("123456789 ${activityType.name}")
-                    println("123456789 ${kotlin.math.abs(amount)}")
-                    println("123456789 --------------------------------------------")
                     return ActivitySummary(activityType, kotlin.math.abs(amount))
                 }
             }
