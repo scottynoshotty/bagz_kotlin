@@ -25,6 +25,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.eridiumcorp.bagz.app.utils.currentMonthActivityKey
+import com.eridiumcorp.bagz.app.utils.getMonthlyActivityEndDate
+import com.eridiumcorp.bagz.app.utils.getMonthlyActivityStartDate
 import com.eridiumcorp.bagz.components.LocalNavController
 import com.eridiumcorp.bagz.components.transactions.list.screen.TransactionsScreenRoute
 import org.koin.androidx.compose.koinViewModel
@@ -75,7 +78,13 @@ fun ActivityScreen(
                                     modifier = Modifier.clickable {
                                         navController.navigate(
                                             TransactionsScreenRoute(
-                                                primaryType = activitySummary.primaryActivitySummary.type
+                                                primaryType = activitySummary.primaryActivitySummary.type,
+                                                startDate = getMonthlyActivityStartDate(
+                                                    currentMonthActivityKey()
+                                                ),
+                                                endDate = getMonthlyActivityEndDate(
+                                                    currentMonthActivityKey()
+                                                )
                                             )
                                         )
                                     }
@@ -105,7 +114,13 @@ fun ActivityScreen(
                                         modifier = Modifier.clickable {
                                             navController.navigate(
                                                 TransactionsScreenRoute(
-                                                    detailedType = detailedActivitySummary.type
+                                                    detailedType = detailedActivitySummary.type,
+                                                    startDate = getMonthlyActivityStartDate(
+                                                        currentMonthActivityKey()
+                                                    ),
+                                                    endDate = getMonthlyActivityEndDate(
+                                                        currentMonthActivityKey()
+                                                    )
                                                 )
                                             )
                                         }

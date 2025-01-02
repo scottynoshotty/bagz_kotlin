@@ -24,6 +24,8 @@ class TransactionsScreenViewModel(
                     accountId = transactionsScreenRoute.accountId,
                     primaryType = transactionsScreenRoute.primaryType,
                     detailedType = transactionsScreenRoute.detailedType,
+                    startDate = transactionsScreenRoute.startDate,
+                    endDate = transactionsScreenRoute.endDate,
                 )
             }
         )
