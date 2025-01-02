@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -27,8 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.eridiumcorp.bagz.components.LocalNavController
-import com.eridiumcorp.bagz.components.transactions.list.screens.detailed.DetailedTypeTransactions
-import com.eridiumcorp.bagz.components.transactions.list.screens.primary.PrimaryTypeTransactions
+import com.eridiumcorp.bagz.components.transactions.list.screen.TransactionsScreenRoute
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
@@ -76,8 +74,8 @@ fun ActivityScreen(
                                     contentDescription = "View Details",
                                     modifier = Modifier.clickable {
                                         navController.navigate(
-                                            PrimaryTypeTransactions(
-                                                activitySummary.primaryActivitySummary.type
+                                            TransactionsScreenRoute(
+                                                primaryType = activitySummary.primaryActivitySummary.type
                                             )
                                         )
                                     }
@@ -106,8 +104,8 @@ fun ActivityScreen(
                                         contentDescription = "View Details",
                                         modifier = Modifier.clickable {
                                             navController.navigate(
-                                                DetailedTypeTransactions(
-                                                    detailedActivitySummary.type
+                                                TransactionsScreenRoute(
+                                                    detailedType = detailedActivitySummary.type
                                                 )
                                             )
                                         }

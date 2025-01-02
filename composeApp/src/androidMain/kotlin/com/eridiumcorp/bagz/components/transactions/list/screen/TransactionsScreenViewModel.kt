@@ -1,4 +1,4 @@
-package com.eridiumcorp.bagz.components.transactions.list.screens.detailed
+package com.eridiumcorp.bagz.components.transactions.list.screen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,21 +10,23 @@ import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class DetailedTypeTransactionsViewModel(
+class TransactionsScreenViewModel(
     private val transactionsRepository: TransactionsRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val detailedTypeTransactions = savedStateHandle.toRoute<DetailedTypeTransactions>()
+    private val transactionsScreenRoute = savedStateHandle.toRoute<TransactionsScreenRoute>()
     private val _uiState = MutableStateFlow(
-        DetailedTypeTransactionsUiState(
+        TransactionsScreenUiState(
             Pager(PagingConfig(pageSize = 30)) {
                 TransactionsPagingSource(
                     transactionsRepository,
-                    detailedType = detailedTypeTransactions.detailedType
+                    accountId = transactionsScreenRoute.accountId,
+                    primaryType = transactionsScreenRoute.primaryType,
+                    detailedType = transactionsScreenRoute.detailedType,
                 )
-
-            })
+            }
+        )
     )
     val uiState = _uiState.asStateFlow()
 }

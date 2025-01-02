@@ -19,6 +19,8 @@ class TransactionsRepository(
         accountId: String? = null,
         primaryType: PrimaryActivityType? = null,
         detailedType: DetailedActivityType? = null,
+        startDate: String? = null,
+        endDate: String? = null,
         startAfter: String? = null,
     ): List<Transaction> {
         var query = firestore.collection("transactions")
@@ -40,6 +42,12 @@ class TransactionsRepository(
                 "transaction_data.personal_finance_category.detailed",
                 detailedType.name
             )
+        }
+        if (startDate != null) {
+            query = query.whereGreaterThanOrEqualTo("transaction_data.date", startDate)
+        }
+        if (endDate != null) {
+            query = query.whereLessThanOrEqualTo("transaction_data.date", endDate)
         }
         if (startAfter != null) {
             val startAtSnapshot =
@@ -64,6 +72,8 @@ class TransactionsPagingSource(
     private val accountId: String? = null,
     private val primaryType: PrimaryActivityType? = null,
     private val detailedType: DetailedActivityType? = null,
+    private val startDate: String? = null,
+    private val endDate: String? = null,
 ) : PagingSource<String, Transaction>() {
 
     override fun getRefreshKey(state: PagingState<String, Transaction>): String? {
@@ -79,6 +89,8 @@ class TransactionsPagingSource(
                 accountId = accountId,
                 primaryType = primaryType,
                 detailedType = detailedType,
+                startDate = startDate,
+                endDate = endDate,
                 startAfter = startAfter
             )
 

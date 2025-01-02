@@ -1,4 +1,4 @@
-package com.eridiumcorp.bagz.components.transactions.list.screens.detailed
+package com.eridiumcorp.bagz.components.transactions.list.screen
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -10,9 +10,8 @@ import com.eridiumcorp.bagz.components.transactions.list.TransactionsList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun DetailedTypeTransactionsListScreen(
-    viewModel: DetailedTypeTransactionsViewModel = koinViewModel(),
-    modifier: Modifier = Modifier,
+fun TransactionsScreen(
+    viewModel: TransactionsScreenViewModel = koinViewModel(), modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(modifier) { padding ->
