@@ -1,9 +1,11 @@
 package com.eridiumcorp.bagz.components.activity
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.eridiumcorp.bagz.components.LocalNavController
@@ -28,7 +31,7 @@ import com.eridiumcorp.bagz.components.transactions.list.screens.detailed.Detail
 import com.eridiumcorp.bagz.components.transactions.list.screens.primary.PrimaryTypeTransactions
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ActivityScreen(
     activityScreenViewModel: ActivityScreenViewModel = koinViewModel(),
@@ -58,17 +61,20 @@ fun ActivityScreen(
                 for (activitySummary in activityData) {
                     ListItem(
                         headlineContent = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
                                 Text(
                                     "${activitySummary.primaryActivitySummary.type.name}: ${activitySummary.primaryActivitySummary.amount}",
-                                    style = MaterialTheme.typography.headlineSmall
+                                    style = MaterialTheme.typography.titleMediumEmphasized,
+                                    modifier = Modifier.weight(1f)
                                 )
-                                Spacer(Modifier.weight(1f)) // Push the icon to the end
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                     contentDescription = "View Details",
                                     modifier = Modifier.clickable {
-                                        // Handle the click, e.g., navigate to a details screen
                                         navController.navigate(
                                             PrimaryTypeTransactions(
                                                 activitySummary.primaryActivitySummary.type
@@ -85,17 +91,20 @@ fun ActivityScreen(
                     for (detailedActivitySummary in activitySummary.detailedActivitySummaries) {
                         ListItem(
                             headlineContent = {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween, // Add horizontal arrangement
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
                                     Text(
                                         "${detailedActivitySummary.type.name}: ${detailedActivitySummary.amount}",
-                                        style = MaterialTheme.typography.bodyLarge
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.weight(1f) // Allow text to take available space
                                     )
-                                    Spacer(Modifier.weight(1f)) // Push the icon to the end
-                                    Icon(
+                                    Icon( // Place the icon separately
                                         imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                         contentDescription = "View Details",
                                         modifier = Modifier.clickable {
-                                            // Handle the click, e.g., navigate to a details screen
                                             navController.navigate(
                                                 DetailedTypeTransactions(
                                                     detailedActivitySummary.type
