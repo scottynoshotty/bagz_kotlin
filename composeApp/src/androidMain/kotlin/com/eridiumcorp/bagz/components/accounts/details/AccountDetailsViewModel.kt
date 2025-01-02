@@ -23,7 +23,7 @@ class AccountDetailsViewModel(
     private val _uiState = MutableStateFlow(AccountDetailsUiState())
     val uiState: StateFlow<AccountDetailsUiState> = _uiState.asStateFlow()
     val transactions = Pager(PagingConfig(pageSize = 30)) {
-        TransactionsPagingSource(transactionsRepository, accountDetails.accountId)
+        TransactionsPagingSource(transactionsRepository, accountId = accountDetails.accountId)
     }
 
     init {

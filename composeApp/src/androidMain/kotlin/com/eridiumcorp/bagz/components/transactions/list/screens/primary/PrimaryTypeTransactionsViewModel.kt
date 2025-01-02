@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.eridiumcorp.bagz.app.repositories.TransactionsByPrimaryTypePagingSource
+import com.eridiumcorp.bagz.app.repositories.TransactionsPagingSource
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,9 +19,9 @@ class PrimaryTypeTransactionsViewModel(
     private val _uiState = MutableStateFlow(
         PrimaryTypeTransactionsUiState(
             Pager(PagingConfig(pageSize = 30)) {
-                TransactionsByPrimaryTypePagingSource(
+                TransactionsPagingSource(
                     transactionsRepository,
-                    primaryTypeTransactions.primaryType
+                    primaryType = primaryTypeTransactions.primaryType
                 )
 
             })

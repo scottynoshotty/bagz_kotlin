@@ -15,70 +15,32 @@ class TransactionsRepository(
     private val auth: FirebaseAuth,
 ) {
 
-    suspend fun getTransactions(accountId: String, startAfter: String? = null): List<Transaction> {
-        var query = firestore.collection("transactions")
-            .document(auth.uid!!)
-            .collection("user_transactions")
-            .whereEqualTo("account_id", accountId)
-            .limit(30)
-
-        if (startAfter != null) {
-            val startAtSnapshot =
-                firestore.collection("transactions")
-                    .document(auth.uid!!)
-                    .collection("user_transactions")
-                    .document(startAfter)
-                    .get()
-                    // The fact you have to do two reads here is obviously wrong.
-                    .await()
-            query = query.startAfter(startAtSnapshot)
-        }
-
-        val snapshot = query.get().await()
-        return snapshot.documents.map { it.toTransaction() }
-    }
-
-    suspend fun getTransactionsByDetailedType(
-        detailedType: DetailedActivityType,
+    suspend fun getTransactions(
+        accountId: String? = null,
+        primaryType: PrimaryActivityType? = null,
+        detailedType: DetailedActivityType? = null,
         startAfter: String? = null,
     ): List<Transaction> {
         var query = firestore.collection("transactions")
             .document(auth.uid!!)
             .collection("user_transactions")
-            .whereEqualTo(
-                "transaction_data.personal_finance_category.detailed",
-                detailedType.name
-            ) // Filter by detailed type
             .limit(30)
 
-        if (startAfter != null) {
-            val startAtSnapshot =
-                firestore.collection("transactions")
-                    .document(auth.uid!!)
-                    .collection("user_transactions")
-                    .document(startAfter)
-                    .get()
-                    .await()
-            query = query.startAfter(startAtSnapshot)
+        if (accountId != null) {
+            query = query.whereEqualTo("account_id", accountId)
         }
-
-        val snapshot = query.get().await()
-        return snapshot.documents.map { it.toTransaction() }
-    }
-
-    suspend fun getTransactionsByPrimaryType(
-        primaryType: PrimaryActivityType,
-        startAfter: String? = null,
-    ): List<Transaction> {
-        var query = firestore.collection("transactions")
-            .document(auth.uid!!)
-            .collection("user_transactions")
-            .whereEqualTo(
+        if (primaryType != null) {
+            query = query.whereEqualTo(
                 "transaction_data.personal_finance_category.primary",
                 primaryType.name
-            ) // Filter by detailed type
-            .limit(30)
-
+            )
+        }
+        if (detailedType != null) {
+            query = query.whereEqualTo(
+                "transaction_data.personal_finance_category.detailed",
+                detailedType.name
+            )
+        }
         if (startAfter != null) {
             val startAtSnapshot =
                 firestore.collection("transactions")
@@ -99,7 +61,9 @@ class TransactionsRepository(
 
 class TransactionsPagingSource(
     private val transactionsRepository: TransactionsRepository,
-    private val accountId: String,
+    private val accountId: String? = null,
+    private val primaryType: PrimaryActivityType? = null,
+    private val detailedType: DetailedActivityType? = null,
 ) : PagingSource<String, Transaction>() {
 
     override fun getRefreshKey(state: PagingState<String, Transaction>): String? {
@@ -111,75 +75,12 @@ class TransactionsPagingSource(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Transaction> {
         return try {
             val startAfter = params.key
-            val transactions = transactionsRepository.getTransactions(accountId, startAfter)
-
-            val nextKey = if (transactions.isEmpty()) {
-                null
-            } else {
-                transactions.last().transactionId
-            }
-
-            LoadResult.Page(
-                data = transactions,
-                prevKey = params.key,
-                nextKey = nextKey
+            val transactions = transactionsRepository.getTransactions(
+                accountId = accountId,
+                primaryType = primaryType,
+                detailedType = detailedType,
+                startAfter = startAfter
             )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
-        }
-    }
-}
-
-class TransactionsByDetailedTypePagingSource(
-    private val transactionsRepository: TransactionsRepository,
-    private val detailedType: DetailedActivityType,
-) : PagingSource<String, Transaction>() {
-
-    override fun getRefreshKey(state: PagingState<String, Transaction>): String? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestItemToPosition(anchorPosition)?.transactionId
-        }
-    }
-
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Transaction> {
-        return try {
-            val startAfter = params.key
-            val transactions =
-                transactionsRepository.getTransactionsByDetailedType(detailedType, startAfter)
-
-            val nextKey = if (transactions.isEmpty()) {
-                null
-            } else {
-                transactions.last().transactionId
-            }
-
-            LoadResult.Page(
-                data = transactions,
-                prevKey = params.key,
-                nextKey = nextKey
-            )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
-        }
-    }
-}
-
-class TransactionsByPrimaryTypePagingSource(
-    private val transactionsRepository: TransactionsRepository,
-    private val primaryType: PrimaryActivityType,
-) : PagingSource<String, Transaction>() {
-
-    override fun getRefreshKey(state: PagingState<String, Transaction>): String? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestItemToPosition(anchorPosition)?.transactionId
-        }
-    }
-
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Transaction> {
-        return try {
-            val startAfter = params.key
-            val transactions =
-                transactionsRepository.getTransactionsByPrimaryType(primaryType, startAfter)
 
             val nextKey = if (transactions.isEmpty()) {
                 null
