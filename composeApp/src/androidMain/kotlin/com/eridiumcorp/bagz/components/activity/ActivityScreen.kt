@@ -21,7 +21,10 @@ fun ActivityScreen(
             if (uiState.activity?.activityData != null) {
                 val activityData = uiState.activity!!.activityData!!
                 for (activitySummary in activityData) {
-                    Text("${activitySummary.type.name}: ${activitySummary.amount}")
+                    Text("${activitySummary.primaryActivitySummary.type.name}: ${activitySummary.primaryActivitySummary.amount}")
+                    for (detailedActivitySummary in activitySummary.detailedActivitySummaries) {
+                        Text("${detailedActivitySummary.type.name}: ${detailedActivitySummary.amount}")
+                    }
                 }
             } else {
                 Text("No activity data")

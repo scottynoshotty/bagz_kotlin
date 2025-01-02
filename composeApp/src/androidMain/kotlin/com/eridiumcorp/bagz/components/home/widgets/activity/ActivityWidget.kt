@@ -59,13 +59,15 @@ fun ActivityWidget(
             else -> {
                 val activity = uiState.activity!!
                 val activityData = activity.activityData!!
-                var data = activityData.take(6).map { activitySummary ->
+                val sortedActivityData =
+                    activityData.sortedByDescending { it.primaryActivitySummary.amount } // Sort here
+                var data = sortedActivityData.take(6).map { activitySummary ->
                     Bars(
-                        label = activitySummary.type.name.substring(0, 3),
+                        label = activitySummary.primaryActivitySummary.type.name.substring(0, 3),
                         values = listOf(
                             Bars.Data(
-                                value = activitySummary.amount,
-                                color = SolidColor(activitySummary.type.color)
+                                value = activitySummary.primaryActivitySummary.amount,
+                                color = SolidColor(activitySummary.primaryActivitySummary.type.color)
                             )
                         )
                     )
