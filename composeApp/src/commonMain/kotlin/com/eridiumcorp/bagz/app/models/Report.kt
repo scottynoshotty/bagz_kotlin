@@ -15,21 +15,32 @@ data class Report(
 
     fun getWeeklyHoldings(): List<Holdings?> {
         val currentDayOfYear = getCurrentDayOfYear()
-        val weeklyHoldings = (currentDayOfYear - 6..currentDayOfYear).map { dayOfYear ->
-            holdingsMap[dayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
-        }.toMutableList()
-        // Add current day holdings as the last element
-        return weeklyHoldings
+        val weeklyHoldings = mutableListOf<Holdings?>()
+        for (i in 0..6) {
+            val dayOfYear = (currentDayOfYear - i + 365) % 365  // Wrap around the year
+            val holdings = holdingsMap[dayOfYear.toString()]
+            if (holdings != null && isWithinLast366Days(holdings.timestampSeconds)) {
+                weeklyHoldings.add(holdings)
+            } else {
+                weeklyHoldings.add(null)
+            }
+        }
+        return weeklyHoldings.reversed() // Reverse to get the correct order
     }
 
     fun getMonthlyHoldings(): List<Holdings?> {
         val currentDayOfYear = getCurrentDayOfYear()
-        val monthlyHoldings = (0..6).map { index ->  // Sample every 5 days, excluding the last day
-            val dayOfYear = currentDayOfYear - (index * 5)
-            holdingsMap[dayOfYear.toString()]?.takeIf { isWithinLast366Days(it.timestampSeconds) }
-        }.toMutableList()
-        monthlyHoldings.reverse()
-        return monthlyHoldings
+        val monthlyHoldings = mutableListOf<Holdings?>()
+        for (i in 0..6) {
+            val dayOfYear = (currentDayOfYear - i * 5 + 365) % 365 // Wrap around the year
+            val holdings = holdingsMap[dayOfYear.toString()]
+            if (holdings != null && isWithinLast366Days(holdings.timestampSeconds)) {
+                monthlyHoldings.add(holdings)
+            } else {
+                monthlyHoldings.add(null)
+            }
+        }
+        return monthlyHoldings.reversed() // Reverse to get the correct order
     }
 
     fun getYearlyHoldings(): List<Holdings?> {
