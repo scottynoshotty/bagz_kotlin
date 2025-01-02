@@ -17,6 +17,7 @@ import com.eridiumcorp.bagz.components.home.widgets.activity.ActivityWidgetViewM
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.link.LinkHostViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel
+import com.eridiumcorp.bagz.components.transactions.list.screens.detailed.DetailedTypeTransactionsViewModel
 import com.eridiumcorp.bagz.components.transactions.list.screens.primary.PrimaryTypeTransactionsViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -36,6 +37,7 @@ val appModule = module {
     single { TransactionsRepository(get(), get()) }
     single { ReportsRepository(get(), get()) }
     viewModel { PrimaryTypeTransactionsViewModel(get(), get()) }
+    viewModel { DetailedTypeTransactionsViewModel(get(), get()) }
     viewModel { SignInViewModel(get()) }
     viewModel { LandingViewModel(get()) }
     viewModel { HomeViewModel(get()) }

@@ -18,6 +18,8 @@ import com.eridiumcorp.bagz.components.landing.Landing
 import com.eridiumcorp.bagz.components.landing.LandingScreen
 import com.eridiumcorp.bagz.components.link.LinkHost
 import com.eridiumcorp.bagz.components.link.LinkHostScreen
+import com.eridiumcorp.bagz.components.transactions.list.screens.detailed.DetailedTypeTransactions
+import com.eridiumcorp.bagz.components.transactions.list.screens.detailed.DetailedTypeTransactionsListScreen
 import com.eridiumcorp.bagz.components.transactions.list.screens.primary.PrimaryTypeTransactions
 import com.eridiumcorp.bagz.components.transactions.list.screens.primary.PrimaryTypeTransactionsListScreen
 
@@ -32,6 +34,7 @@ actual fun Bagz(modifier: Modifier) {
             composable<AccountListRoute> { AccountListScreen(modifier) }
             composable<ActivityRoute> { ActivityScreen(modifier = modifier) }
             composable<PrimaryTypeTransactions> { PrimaryTypeTransactionsListScreen(modifier = modifier) }
+            composable<DetailedTypeTransactions> { DetailedTypeTransactionsListScreen(modifier = modifier) }
         }
     }
 }

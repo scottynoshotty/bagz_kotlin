@@ -24,6 +24,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.eridiumcorp.bagz.components.LocalNavController
+import com.eridiumcorp.bagz.components.transactions.list.screens.detailed.DetailedTypeTransactions
 import com.eridiumcorp.bagz.components.transactions.list.screens.primary.PrimaryTypeTransactions
 import org.koin.androidx.compose.koinViewModel
 
@@ -84,10 +85,25 @@ fun ActivityScreen(
                     for (detailedActivitySummary in activitySummary.detailedActivitySummaries) {
                         ListItem(
                             headlineContent = {
-                                Text(
-                                    "${detailedActivitySummary.type.name}: ${detailedActivitySummary.amount}",
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(
+                                        "${detailedActivitySummary.type.name}: ${detailedActivitySummary.amount}",
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Spacer(Modifier.weight(1f)) // Push the icon to the end
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                        contentDescription = "View Details",
+                                        modifier = Modifier.clickable {
+                                            // Handle the click, e.g., navigate to a details screen
+                                            navController.navigate(
+                                                DetailedTypeTransactions(
+                                                    detailedActivitySummary.type
+                                                )
+                                            )
+                                        }
+                                    )
+                                }
                             }
                         )
                     }
