@@ -24,6 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.components.jarvis.ChatMessage
 import com.eridiumcorp.bagz.components.jarvis.JarvisViewModel
@@ -38,6 +41,7 @@ fun JarvisBottomSheet(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var userInput by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
 
     ModalBottomSheet(onDismissRequest = onDismissRequest, modifier = modifier) {
         Column(
@@ -61,7 +65,14 @@ fun JarvisBottomSheet(
                     value = userInput,
                     onValueChange = { userInput = it },
                     label = { Text("Enter message") },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
+                        .focusRequester(focusRequester)
+                        .onFocusChanged { focusState ->
+                            if (!focusState.isFocused) {
+                                focusRequester.requestFocus() // Re-request focus if lost
+                            }
+                        }
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = {
