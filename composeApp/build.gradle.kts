@@ -71,6 +71,7 @@ kotlin {
             implementation(libs.androidx.material3.adaptive.navigation.suite)
             implementation(libs.androidx.ui.text.google.fonts)
             implementation (libs.compose.charts)
+            implementation(libs.firebase.vertexai)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

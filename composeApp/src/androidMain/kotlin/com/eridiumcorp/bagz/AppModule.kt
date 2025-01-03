@@ -24,6 +24,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.functions
+import com.google.firebase.vertexai.vertexAI
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -31,13 +32,14 @@ val appModule = module {
     single { FirebaseFirestore.getInstance() }
     single { Firebase.auth }
     single { Firebase.functions }
+    single { Firebase.vertexAI.generativeModel("gemini-1.5-flash") }
     single { AuthService(get()) }
     single { PlaidService(get()) }
     single { AccountsRepository(get(), get()) }
     single { ActivityRepository(get(), get()) }
     single { TransactionsRepository(get(), get()) }
     single { ReportsRepository(get(), get()) }
-    single { JarvisService() }
+    single { JarvisService(get()) }
     viewModel { TransactionsScreenViewModel(get(), get()) }
     viewModel { SignInViewModel(get()) }
     viewModel { LandingViewModel(get()) }
