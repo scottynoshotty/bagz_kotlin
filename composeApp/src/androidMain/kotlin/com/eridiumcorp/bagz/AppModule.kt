@@ -32,7 +32,7 @@ val appModule = module {
     single { FirebaseFirestore.getInstance() }
     single { Firebase.auth }
     single { Firebase.functions }
-    single { Firebase.vertexAI.generativeModel("gemini-1.5-flash") }
+    single { Firebase.vertexAI.generativeModel("gemini-1.5-flash").startChat() }
     single { AuthService(get()) }
     single { PlaidService(get()) }
     single { AccountsRepository(get(), get()) }
