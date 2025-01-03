@@ -18,7 +18,11 @@ class ReportsRepository(
             .document(auth.uid!!)
             .snapshots()
             .map { snapshot ->
-                snapshot.toReport()
+                if (snapshot.exists()) { // Check if the snapshot exists
+                    snapshot.toReport()
+                } else {
+                    Report(emptyMap()) // Return an empty Report if the snapshot doesn't exist
+                }
             }
 
     }

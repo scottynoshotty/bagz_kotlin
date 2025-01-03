@@ -18,7 +18,11 @@ class ActivityRepository(
             .document(auth.uid!!)
             .snapshots()
             .map { snapshot ->
-                snapshot.toActivity()
+                if (snapshot.exists()) {
+                    snapshot.toActivity()
+                } else {
+                    Activity.fromMap(emptyMap())
+                }
             }
     }
 }
