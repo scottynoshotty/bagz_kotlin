@@ -6,6 +6,7 @@ import com.eridiumcorp.bagz.app.repositories.ActivityRepository
 import com.eridiumcorp.bagz.app.repositories.ReportsRepository
 import com.eridiumcorp.bagz.app.repositories.TransactionsRepository
 import com.eridiumcorp.bagz.app.services.AuthService
+import com.eridiumcorp.bagz.app.services.JarvisService
 import com.eridiumcorp.bagz.app.services.PlaidService
 import com.eridiumcorp.bagz.components.accounts.details.AccountDetailsViewModel
 import com.eridiumcorp.bagz.components.accounts.list.AccountListViewModel
@@ -14,6 +15,7 @@ import com.eridiumcorp.bagz.components.home.widgets.bag.BagWidgetViewModel
 import com.eridiumcorp.bagz.components.home.screen.HomeViewModel
 import com.eridiumcorp.bagz.components.home.widgets.accounts.AccountsWidgetViewModel
 import com.eridiumcorp.bagz.components.home.widgets.activity.ActivityWidgetViewModel
+import com.eridiumcorp.bagz.components.jarvis.JarvisViewModel
 import com.eridiumcorp.bagz.components.landing.LandingViewModel
 import com.eridiumcorp.bagz.components.link.LinkHostViewModel
 import com.eridiumcorp.bagz.components.signin.SignInViewModel
@@ -35,6 +37,7 @@ val appModule = module {
     single { ActivityRepository(get(), get()) }
     single { TransactionsRepository(get(), get()) }
     single { ReportsRepository(get(), get()) }
+    single { JarvisService() }
     viewModel { TransactionsScreenViewModel(get(), get()) }
     viewModel { SignInViewModel(get()) }
     viewModel { LandingViewModel(get()) }
@@ -47,5 +50,6 @@ val appModule = module {
     viewModel { (savedStateHandle: SavedStateHandle) ->
         AccountDetailsViewModel(get(), get(), savedStateHandle)
     }
+    viewModel { JarvisViewModel(get()) }
     viewModel { ActivityWidgetViewModel(get()) }
 }

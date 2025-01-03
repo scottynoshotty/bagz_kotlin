@@ -2,6 +2,7 @@ package com.eridiumcorp.bagz.components.home.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
@@ -39,23 +41,49 @@ import com.eridiumcorp.bagz.components.home.widgets.activity.ActivityWidget
 import com.eridiumcorp.bagz.components.home.widgets.bag.BagWidget
 import com.eridiumcorp.bagz.components.link.LinkHost
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.rememberCoroutineScope
+import com.eridiumcorp.bagz.components.jarvis.bottomsheet.JarvisBottomSheet
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val uiState by viewModel.uiState.collectAsState()
+    val modalBottomSheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
                 expandedHeight = 42.dp,
                 title = {
-                    Image(
-                        painter = painterResource(Res.drawable.money_bag_outline_white),
-                        contentDescription = "App Logo",
-                        modifier = Modifier.size(38.dp).padding(bottom = 4.dp)
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Image(
+                            painter = painterResource(Res.drawable.money_bag_outline_white),
+                            contentDescription = "App Logo",
+                            modifier = Modifier
+                                .size(38.dp)
+                                .padding(4.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = "Insights",
+                            modifier = Modifier
+                                .size(38.dp)
+                                .padding(vertical = 4.dp, horizontal = 8.dp)
+                                .clickable {
+                                    scope.launch { // Show bottom sheet when icon is clicked
+                                        modalBottomSheetState.show()
+                                    }
+                                },
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
@@ -79,6 +107,10 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = 
             }
         },
     ) { padding ->
+        // Show JarvisBottomSheet when the sheet is open
+        if (modalBottomSheetState.isVisible) {
+            JarvisBottomSheet(onDismissRequest = { scope.launch { modalBottomSheetState.hide() } })
+        }
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
