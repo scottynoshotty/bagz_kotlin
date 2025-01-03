@@ -50,7 +50,7 @@ fun JarvisBottomSheet(
                 .padding(16.dp)
         ) {
             // Display chat messages
-            LazyColumn(reverseLayout = true) {
+            LazyColumn(reverseLayout = true, modifier = Modifier.weight(1f)) {
                 items(uiState.chatHistory) { message ->
                     ChatMessageItem(message)
                 }
