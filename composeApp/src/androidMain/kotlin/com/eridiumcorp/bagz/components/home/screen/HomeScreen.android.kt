@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
@@ -35,6 +34,7 @@ import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.unit.dp
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.money_bag_outline_white
+import bagz.composeapp.generated.resources.robo_advisory_white
 import com.eridiumcorp.bagz.components.LocalNavController
 import com.eridiumcorp.bagz.components.home.widgets.accounts.AccountsWidget
 import com.eridiumcorp.bagz.components.home.widgets.activity.ActivityWidget
@@ -67,21 +67,21 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = 
                             painter = painterResource(Res.drawable.money_bag_outline_white),
                             contentDescription = "App Logo",
                             modifier = Modifier
-                                .size(38.dp)
                                 .padding(4.dp)
+                                .size(38.dp)
                         )
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
+                        Image(
+                            painter = painterResource(Res.drawable.robo_advisory_white),
                             contentDescription = "Insights",
                             modifier = Modifier
+                                .padding(vertical = 4.dp)
+                                .padding(end = 8.dp)
                                 .size(38.dp)
-                                .padding(vertical = 4.dp, horizontal = 8.dp)
                                 .clickable {
                                     scope.launch { // Show bottom sheet when icon is clicked
                                         modalBottomSheetState.show()
                                     }
                                 },
-                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
