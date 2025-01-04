@@ -26,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.eridiumcorp.bagz.app.utils.currentMonthActivityKey
+import com.eridiumcorp.bagz.app.utils.formatDouble
 import com.eridiumcorp.bagz.app.utils.getMonthlyActivityEndDate
 import com.eridiumcorp.bagz.app.utils.getMonthlyActivityStartDate
 import com.eridiumcorp.bagz.components.LocalNavController
@@ -68,7 +69,11 @@ fun ActivityScreen(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(
-                                    "${activitySummary.primaryActivitySummary.type.name}: ${activitySummary.primaryActivitySummary.amount}",
+                                    "${activitySummary.primaryActivitySummary.type.name}: ${
+                                        formatDouble(
+                                            activitySummary.primaryActivitySummary.amount
+                                        )
+                                    }",
                                     style = MaterialTheme.typography.titleMediumEmphasized,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -104,7 +109,11 @@ fun ActivityScreen(
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Text(
-                                        "${detailedActivitySummary.type.name}: ${detailedActivitySummary.amount}",
+                                        "${detailedActivitySummary.type.name}: ${
+                                            formatDouble(
+                                                detailedActivitySummary.amount
+                                            )
+                                        }",
                                         style = MaterialTheme.typography.bodyMedium,
                                         modifier = Modifier.weight(1f) // Allow text to take available space
                                     )
