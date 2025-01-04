@@ -124,6 +124,7 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel(), modifier: Modifier = 
             if (uiState.loading) {
                 CircularProgressIndicator()
             } else {
+                Spacer(modifier = Modifier.height(16.dp))
                 BagWidget()
                 Spacer(modifier = Modifier.height(16.dp))
                 AccountsWidget()
