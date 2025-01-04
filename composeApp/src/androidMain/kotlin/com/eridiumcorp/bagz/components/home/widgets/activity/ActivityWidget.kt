@@ -35,7 +35,9 @@ import com.eridiumcorp.bagz.components.activity.ActivityRoute
 import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.models.Bars
 import ir.ehsannarmani.compose_charts.models.GridProperties
+import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
 import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
+import ir.ehsannarmani.compose_charts.models.LabelProperties
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
@@ -116,6 +118,14 @@ fun ActivityWidget(
                             .height(400.dp)
                             .fillMaxWidth(),
                         data = data,
+                        indicatorProperties = HorizontalIndicatorProperties(
+                            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurface)
+                        ),
+                        labelProperties = LabelProperties(
+                            enabled = true,
+                            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurface)
+
+                        ),
                         labelHelperProperties = LabelHelperProperties(enabled = false),
                         gridProperties = GridProperties(enabled = false)
                     )
