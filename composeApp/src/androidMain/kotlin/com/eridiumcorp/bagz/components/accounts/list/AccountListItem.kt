@@ -14,12 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.eridiumcorp.bagz.app.models.Account
+import com.eridiumcorp.bagz.app.utils.formatDouble
 
 @Composable
 fun AccountListItem(account: Account, onAccountClick: (Account) -> Unit) {
     val balance = when {
-        account.balances.available != null -> account.balances.available.toString()
-        account.balances.current != null -> account.balances.current.toString()
+        account.balances.available != null -> formatDouble(account.balances.available).toString()
+        account.balances.current != null -> formatDouble(account.balances.current).toString()
         else -> "N/A"
     }
     Card(
