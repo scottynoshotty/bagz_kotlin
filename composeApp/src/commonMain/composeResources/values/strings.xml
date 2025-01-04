@@ -2,10 +2,10 @@
     <string name="app_name">Bagz</string>
     <string name="google_sign_in_button_label">Continue with Google</string>
     <string name="sign_out_button_label">Sign out</string>
-    <string name="bag_widget_title">Your Bag</string>
-    <string name="activity_widget_title">Your Activity</string>
+    <string name="bag_widget_title">Bag</string>
+    <string name="activity_widget_title">Activity</string>
     <string name="view_account_list_button_label">view all</string>
     <string name="view_activity_button_label">view more</string>
-    <string name="accounts_widget_title">Your Accounts</string>
+    <string name="accounts_widget_title">Accounts</string>
     <string name="web_oauth_client_id">120657644187-dnlsalb11o35680ifkigmd5un6249t6s.apps.googleusercontent.com</string>
 </resources>
