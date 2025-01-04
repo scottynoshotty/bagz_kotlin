@@ -6,6 +6,7 @@ import com.eridiumcorp.bagz.app.models.Account
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,6 +21,7 @@ class AccountsRepository(
         return firestore.collection("accounts")
             .document(auth.uid!!)
             .collection("user_accounts")
+            .orderBy("account_data.balances.current", Query.Direction.DESCENDING)
             .limit(6)
             .snapshots()
             .map { snapshot ->
@@ -31,6 +33,7 @@ class AccountsRepository(
         var query = firestore.collection("accounts")
             .document(auth.uid!!)
             .collection("user_accounts")
+            .orderBy("account_data.balances.current", Query.Direction.DESCENDING)
             .limit(30)
 
         if (startAfter != null) {
