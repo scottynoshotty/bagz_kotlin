@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,8 +23,7 @@ fun AccountListItem(account: Account, onAccountClick: (Account) -> Unit) {
         account.balances.current != null -> formatDouble(account.balances.current).toString()
         else -> "N/A"
     }
-    Card(
-        elevation = 4.dp,
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp)
@@ -36,21 +35,21 @@ fun AccountListItem(account: Account, onAccountClick: (Account) -> Unit) {
         ) {
             Text(
                 text = account.name,
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Account Type: ${account.accountType}",
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = "Available Balance: $balance",
-                style = MaterialTheme.typography.body1.copy(color = Color.Green)
+                style = MaterialTheme.typography.bodyLarge.copy(color = Color.Green)
             )
             account.mask?.let {
                 Text(
                     text = "Masked Account Number: $it",
-                    style = MaterialTheme.typography.body1.copy(color = Color.Gray)
+                    style = MaterialTheme.typography.bodyLarge.copy(color = Color.Gray)
                 )
             }
         }
