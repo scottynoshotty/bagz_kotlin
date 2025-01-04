@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import bagz.composeapp.generated.resources.Res
 import bagz.composeapp.generated.resources.activity_widget_title
 import bagz.composeapp.generated.resources.view_activity_button_label
+import com.eridiumcorp.bagz.app.utils.formatDouble
 import com.eridiumcorp.bagz.app.utils.getCurrentMonthName
 import com.eridiumcorp.bagz.components.LocalNavController
 import com.eridiumcorp.bagz.components.activity.ActivityRoute
@@ -119,7 +120,10 @@ fun ActivityWidget(
                             .fillMaxWidth(),
                         data = data,
                         indicatorProperties = HorizontalIndicatorProperties(
-                            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurface)
+                            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurface),
+                            contentBuilder = { indicator ->
+                                formatDouble(indicator)
+                            },
                         ),
                         labelProperties = LabelProperties(
                             enabled = true,
