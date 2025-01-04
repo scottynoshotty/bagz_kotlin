@@ -38,11 +38,13 @@ fun AppLineChart(values: List<Double>, labels: List<String>, modifier: Modifier 
         data = data,
         labelProperties = LabelProperties(
             enabled = true,
-            labels = labels
+            labels = labels,
+            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurface)
         ),
         labelHelperProperties = LabelHelperProperties(enabled = false),
         gridProperties = GridProperties(enabled = false),
         indicatorProperties = HorizontalIndicatorProperties(
+            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurface),
             contentBuilder = { indicator ->
                 formatDouble(indicator)
             },
