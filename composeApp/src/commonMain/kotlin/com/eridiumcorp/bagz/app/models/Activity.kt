@@ -53,7 +53,9 @@ data class Activity(
                     }
                     acc
                 }
-            return Activity(activitySummaryList)
+            val sortedData =
+                activitySummaryList.sortedByDescending { it.primaryActivitySummary.amount }
+            return Activity(sortedData)
         }
     }
 }
